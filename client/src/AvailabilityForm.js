@@ -38,6 +38,7 @@ const AvailabilityForm = () => {
 				<option value="Python">Python</option>
 				<option value="Java">Java</option>
 				<option value="Java">Sql</option>
+				<option value="Java">PM</option>
 				{/* Add more options for other programming topics */}
 			</select>
 			<h2>Select Time Slot</h2>
