@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -50,10 +50,6 @@ function Login() {
           </form>
         </section>
       </main>
-
-      <footer>
-        <p>© 2023 Your Story Page. All rights reserved.</p>
-      </footer>
     </div>
   );
   }
