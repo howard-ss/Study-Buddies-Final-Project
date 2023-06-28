@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "./Header.css";
 
 const Header = ({ hasAccount }) => {
   return (
@@ -12,21 +13,23 @@ const Header = ({ hasAccount }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/about" activeclassname="active">
+            <NavLink to="/about" activeclassname="active" exact>
               About
             </NavLink>
           </li>
-          <li>
-            {hasAccount ? (
-              <NavLink to="/login" activeclassname="active">
+          {hasAccount ? (
+            <li>
+              <NavLink to="/login" activeclassname="active" exact>
                 Login
               </NavLink>
-            ) : (
-              <NavLink to="/register" activeclassname="active">
+            </li>
+          ) : (
+            <li>
+              <NavLink to="/register" activeclassname="active" exact>
                 Register
               </NavLink>
-            )}
-          </li>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
