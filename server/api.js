@@ -8,34 +8,34 @@ router.get("/", (_, res) => {
   res.json({ message: "Hello, world!" });
 });
 
-//mock users data
-const users = [
-  { id: 1, username: "admin", password: "password" },
-  // Add more user objects as needed
-];
+// //mock users data
+// const users = [
+//   { id: 1, username: "admin", password: "password" },
+//   // Add more user objects as needed
+// ];
 
 
-// Login route
-router.post("/login", (req, res) => {
-  const { username, password } = req.body;
+// // Login route
+// router.post("/login", (req, res) => {
+//   const { username, password } = req.body;
 
-  // Find the user with the matching username
-  const user = users.find((user) => user.username === username);
+//   // Find the user with the matching username
+//   const user = users.find((user) => user.username === username);
 
-  if (!user) {
-    // User not found
-    res.status(401).json({ error: "Invalid credentials" });
-    return;
-  }
+//   if (!user) {
+//     // User not found
+//     res.status(401).json({ error: "Invalid credentials" });
+//     return;
+//   }
 
-  if (user.password !== password) {
-    // Passwords do not match
-    res.status(401).json({ error: "Invalid credentials" });
-    return;
-  }
-  // Login successful
-  res.json({ message: "Login successful" });
-});
+//   if (user.password !== password) {
+//     // Passwords do not match
+//     res.status(401).json({ error: "Invalid credentials" });
+//     return;
+//   }
+//   // Login successful
+//   res.json({ message: "Login successful" });
+// });
 
 // Define the route for retrieving matching trainees based on availability and topics of interest
 router.get("/matching-trainees", (req, res) => {
