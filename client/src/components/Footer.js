@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <div>
-    <p>© 2023 Your Story Page. All rights reserved.</p>
+    <p>© Designed by ' Team-Spirit ' </p>
 
     </div>
   );
