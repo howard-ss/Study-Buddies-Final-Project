@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 //import { Link } from "react-router-dom";
+import "./Login.css";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ function Login() {
     //   }
     };
   return (
-    <div>
+    <div className="login-container">
     <h1>Story Page</h1>
     {/* <nav>
       <ul>
@@ -24,33 +25,38 @@ function Login() {
       </ul>
     </nav> */}
 
-  <main>
-    <section>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <label htmlFor="login-username">Username</label>
-        <input
-          type="text"
-          id="login-username"
+<main>
+        <section>
+          <h2 className="login-title">Login</h2>
+          <form className="login-form" onSubmit={handleLogin}>
+            <label htmlFor="login-username" className="login-label">Username</label>
+            <input
+              type="text"
+              id="login-username"
+              name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              className="login-input"
             />
-             <br />
-            <label htmlFor="login-password">Password</label>
+
+            <label htmlFor="login-password" className="login-label">Password</label>
             <input
               type="password"
               id="login-password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="login-input"
             />
-            <br />
-            <button type="submit">Login</button>
+
+            <button type="submit" className="login-button">Login</button>
           </form>
         </section>
       </main>
     </div>
   );
-  }
- export default Login;
+}
+
+export default Login;

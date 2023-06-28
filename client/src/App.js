@@ -13,7 +13,6 @@ const App = () => {
   const [hasAccount, setHasAccount] = useState(false);
 
   return (
-
 		<div>
       <Header hasAccount={hasAccount} />
       <Routes>
