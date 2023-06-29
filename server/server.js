@@ -1,32 +1,48 @@
-import http from "node:http";
-import app from "./app";
+import express from "express";
 import config from "./utils/config";
-import logger from "./utils/logger";
-import { Pool } from "pg";
+import cors from "cors";
+import { pool } from "./db";
 
-const pool = new Pool({
-	connectionString: "your-postgres-connection-string",
+const app = express();
+
+app.use(express.json());
+app.use(cors({ origin: "*" }));
+
+app.get("/", (req, res) => {
+	res.send("Server is running.");
 });
 
-pool.on("connect", () => {
-	logger.info("Connected to the database");
+app.post("/api/matching_trainees/availability", async (req, res) => {
+	try {
+		const { topic, timeSlot, selectedDate, selectedTime } = req.body;
+
+		// Insert the availability data into the database
+		await pool.query(
+			`INSERT INTO availability (topic, time_slot, selected_date, selected_time) 
+       VALUES ($1, $2, $3, $4)`,
+			[topic, timeSlot, selectedDate, selectedTime]
+		);
+
+		res.status(200).json({ message: "Availability submitted successfully." });
+	} catch (error) {
+		console.error("Error submitting availability:", error);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
 });
 
-pool.on("error", (err) => {
-	logger.error("Database connection error:", err);
+app.get("/api/matching_trainees/availability", async (req, res) => {
+	try {
+		// Fetch the matched trainees from the database
+		const queryResult = await pool.query("SELECT * FROM matching_trainees");
+		const matchedTrainees = queryResult.rows;
+
+		res.status(200).json(matchedTrainees);
+	} catch (error) {
+		console.error("Error fetching matched trainees:", error);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
 });
 
-// Pass the database pool to the app
-app.set("pool", pool);
-
-const server = http.createServer(app);
-
-server.on("listening", () => {
-	const addr = server.address();
-	const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
-	logger.info("Listening on: %s", bind);
-});
-
-server.listen(config.port, () => {
-	logger.info(`Server is running on http://localhost:${config.port}`);
+app.listen(config.port, () => {
+	console.log(`Server is running on port ${config.port}`);
 });

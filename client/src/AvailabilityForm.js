@@ -34,7 +34,9 @@ const AvailabilityForm = () => {
 		return timeSlots;
 	};
 
-	const handleAvailabilitySubmit = async () => {
+	const handleAvailabilitySubmit = async (e) => {
+		e.preventDefault(); // Prevent the default form submission behavior
+
 		try {
 			const availabilityData = {
 				topic: topic,
@@ -43,9 +45,8 @@ const AvailabilityForm = () => {
 				selectedTime: selectedTime,
 			};
 
-			// Make an API call to submit trainee's availability
 			await axios.post(
-				"http://localhost:3100/api/trainees/availability",
+				"http://localhost:3100/api/matching_trainees",
 				availabilityData
 			);
 
@@ -62,39 +63,41 @@ const AvailabilityForm = () => {
 	return (
 		<div>
 			<h2>Enter Your Availability</h2>
-			<DatePicker
-				selected={selectedDate}
-				onChange={(date) => setSelectedDate(date)}
-				placeholderText="Select Date"
-			/>
-			<h2>Select Programming Topic</h2>
-			<select value={topic} onChange={(e) => setTopic(e.target.value)}>
-				<option value="">Select Topic</option>
-				<option value="JavaScript">JavaScript</option>
-				<option value="Python">Python</option>
-				<option value="Java">Java</option>
-				<option value="SQL">SQL</option>
-				<option value="PM">PM</option>
-				<option value="PHP">PHP</option>
-				{/* Add more options for other programming topics */}
-			</select>
+			<form onSubmit={handleAvailabilitySubmit}>
+				<DatePicker
+					selected={selectedDate}
+					onChange={(date) => setSelectedDate(date)}
+					placeholderText="Select Date"
+				/>
+				<h2>Select Programming Topic</h2>
+				<select value={topic} onChange={(e) => setTopic(e.target.value)}>
+					<option value="">Select Topic</option>
+					<option value="JavaScript">JavaScript</option>
+					<option value="Python">Python</option>
+					<option value="Java">Java</option>
+					<option value="SQL">SQL</option>
+					<option value="PM">PM</option>
+					<option value="PHP">PHP</option>
+					{/* Add more options for other programming topics */}
+				</select>
 
-			<h2>Select Time Slot</h2>
-			<select value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)}>
-				<option value="">Select Time Slot</option>
-				{generateTimeSlots()}
-			</select>
-			<DatePicker
-				selected={selectedTime}
-				onChange={(time) => setSelectedTime(time)}
-				showTimeSelect
-				showTimeSelectOnly
-				timeIntervals={15}
-				timeCaption="Time"
-				dateFormat="h:mm aa"
-				placeholderText="Select Time"
-			/>
-			<button onClick={handleAvailabilitySubmit}>Submit</button>
+				<h2>Select Time Slot</h2>
+				<select value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)}>
+					<option value="">Select Time Slot</option>
+					{generateTimeSlots()}
+				</select>
+				<DatePicker
+					selected={selectedTime}
+					onChange={(time) => setSelectedTime(time)}
+					showTimeSelect
+					showTimeSelectOnly
+					timeIntervals={15}
+					timeCaption="Time"
+					dateFormat="h:mm aa"
+					placeholderText="Select Time"
+				/>
+				<button type="submit">Submit</button>
+			</form>
 		</div>
 	);
 };
