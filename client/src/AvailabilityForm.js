@@ -39,13 +39,16 @@ const AvailabilityForm = () => {
 
 		try {
 			const availabilityData = {
-				topic: topic,
-				timeSlot: timeSlot,
-				selectedDate: selectedDate,
-				selectedTime: selectedTime,
+				user_id: 2,
+				selected_date: selectedDate,
+				selected_time: "17:00:00",
+				topic,
 			};
 
-			await axios.post("/api/trainees/availability", availabilityData);
+			await axios.post(
+				"http://localhost:3000/api/avail",
+				availabilityData
+			);
 
 			// Clear the input fields after submitting
 			setTopic("");
@@ -93,7 +96,7 @@ const AvailabilityForm = () => {
 					dateFormat="h:mm aa"
 					placeholderText="Select Time"
 				/>
-				<button type="submit">Submit</button>
+				<button type="submit" onClick={handleAvailabilitySubmit}>Submit</button>
 			</form>
 		</div>
 	);
