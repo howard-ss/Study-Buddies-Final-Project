@@ -7,9 +7,9 @@ const MatchingTrainees = () => {
 	useEffect(() => {
 		const fetchMatchedTrainees = async () => {
 			try {
-				const response = await axios.get("/api/matching_trainees");
+				const response = await axios.get("/api/trainees");
 				const data = response.data;
-				setMatchedTrainees(data);
+				setMatchedTrainees(data.matchingTrainees);
 			} catch (error) {
 				console.error("Error fetching matched trainees:", error);
 			}
@@ -27,8 +27,8 @@ const MatchingTrainees = () => {
 				<ul>
 					{matchedTrainees.map((trainee) => (
 						<li key={trainee.id}>
-							Trainee ID: {trainee.trainee_id}, Name: {trainee.name},
-							Availability: {trainee.availability}, Topics of Interest:{" "}
+							Trainee ID: {trainee.id}, Name: {trainee.username}, Availability:{" "}
+							{trainee.availability}, Topics of Interest:{" "}
 							{trainee.topics_of_interest}
 						</li>
 					))}

@@ -29,7 +29,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Route for retrieving matching trainees based on availability and topic
-router.get("/matching-trainees", async (req, res) => {
+router.get("/trainees", async (req, res) => {
 	try {
 		const { name, topics_of_interest, availability, time } = req.query;
 
@@ -55,7 +55,7 @@ async function getMatchingTrainees(name,topics_of_interest, availability, time) 
 
 	// Example implementation:
 	const result = await db.query(
-		"SELECT * FROM matching_trainees WHERE name=$1 And topics_of_interest = $3 AND availability = $2 AND time = $4",
+		"SELECT * FROM trainees WHERE name=$1 And topics_of_interest = $3 AND availability = $2 AND time = $4",
 		[name, topics_of_interest, availability, time]
 	);
 	const matchingTrainees = result.rows;

@@ -45,10 +45,7 @@ const AvailabilityForm = () => {
 				selectedTime: selectedTime,
 			};
 
-			await axios.post(
-				"http://localhost:3100/api/matching_trainees",
-				availabilityData
-			);
+			await axios.post("/api/trainees/availability", availabilityData);
 
 			// Clear the input fields after submitting
 			setTopic("");
