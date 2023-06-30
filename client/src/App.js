@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login setHasAccount={setHasAccount} />} />
         <Route path="/register" element={<Register setHasAccount={setHasAccount} />} />
-      </Routes>
+        </Routes>
       <AvailabilityForm />
       <MatchingTrainees />
       <Footer />

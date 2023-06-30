@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "./Register.css";
+
 
 function RegisterPage() {
   const [name, setName] = useState("");
@@ -7,6 +9,7 @@ function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [cohort, setCohort] = useState("");
+  const [userType, setUserType] = useState("");
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -32,12 +35,18 @@ function RegisterPage() {
     setCohort(e.target.value);
   };
 
+  const handleUserTypeChange = (e) => {
+    setUserType(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Perform registration logic here
     // You can access the form values: name, email, password, confirmPassword, and phone
   };
+
+  const userTypes = ["Html-CSS", "JavaScript", "Node.js", "PSQL"];
 
   return (
     <div className="container">
@@ -67,6 +76,16 @@ function RegisterPage() {
           <label htmlFor="cohort">Cohort:</label>
           <input type="text" id="cohort" value={cohort} onChange={handleCohortChange} placeholder="Enter your cohort" required />
         </div>
+        <div className="form-group">
+          <label htmlFor="userType">User Type:</label>
+          <select id="userType" value={userType} onChange={handleUserTypeChange} required>
+            <option value="">Select user type</option>
+            {userTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select> </div>
         <button className="btn" type="submit">Register</button>
       </form>
     </div>
