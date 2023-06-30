@@ -3,8 +3,11 @@ import "./Footer.css";
 
 function Footer() {
   return (
+
     <div className="footer">
-      <p>© 2023  Study Buddies Page. All rights reserved.</p>
+
+    <p>© Designed by ' Team-Spirit ' </p>
+
     </div>
   );
 }

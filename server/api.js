@@ -1,11 +1,13 @@
 import { Router } from "express";
 import logger from "./utils/logger";
+import db from "./db";
 
 const router = Router();
 
+// Root route for welcoming everyone
 router.get("/", (_, res) => {
-  logger.debug("Welcoming everyone...");
-  res.json({ message: "Hello, world!" });
+	logger.debug("Welcoming everyone...");
+	res.json({ message: "Hello, world!" });
 });
 
 // //mock users data
@@ -37,52 +39,57 @@ router.get("/", (_, res) => {
 //   res.json({ message: "Login successful" });
 // });
 
-// Define the route for retrieving matching trainees based on availability and topics of interest
-router.get("/matching-trainees", (req, res) => {
-  try {
-    // Retrieve the availability and topics of interest from the request query parameters
-    const availability = req.query.availability;
-    const topicsOfInterest = req.query.topicsOfInterest;
 
-    // Perform the necessary logic to fetch the matching trainees based on availability and topics of interest
-    const matchingTrainees = getMatchingTrainees(availability, topicsOfInterest);
+// Route for user registration
+router.post("/register", async (req, res) => {
+	try {
+		const { username, password, email, phone } = req.body;
 
-    // Return the matching trainees as the response
-    res.json({ matchingTrainees });
-  } catch (error) {
-    logger.error("Error retrieving matching trainees:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
+		// Save the user details to the database (implement your logic here)
+		await db.query(
+			"INSERT INTO users (username, password, email, phone) VALUES ($1, $2, $3, $4)",
+			[username, password, email, phone]
+		);
+
+		res.status(201).json({ message: "User registered successfully" });
+	} catch (error) {
+		logger.error("Error registering user:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
 });
 
-// Function to retrieve matching trainees based on availability and topics of interest
-function getMatchingTrainees(availability, topicsOfInterest) {
-  // Implement the logic to fetch the matching trainees
-  // Return an array of matching trainees
+// Route for retrieving matching trainees based on availability and topic
+router.get("/matching-trainees", async (req, res) => {
+	try {
+		const { topic, availability, time } = req.query;
 
-  // Example implementation:
-  const matchingTrainees = trainees.filter((trainee) => {
-    const hasMatchingAvailability = trainee.availability.includes(availability);
-    const hasMatchingTopic = trainee.topicsOfInterest.includes(topicsOfInterest);
-    return hasMatchingAvailability && hasMatchingTopic;
-  });
+		// Perform the necessary logic to fetch matching trainees based on availability, topic, and time
+		const matchingTrainees = await getMatchingTrainees(
+			topic,
+			availability,
+			time
+		);
 
-  return matchingTrainees;
+		res.json({ matchingTrainees });
+	} catch (error) {
+		logger.error("Error retrieving matching trainees:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+// Function to retrieve matching trainees based on availability, topic, and time
+async function getMatchingTrainees(topic, availability, time) {
+	// Implement the logic to fetch the matching trainees
+	// Return an array of matching trainees
+
+	// Example implementation:
+	const result = await db.query(
+		"SELECT * FROM trainees WHERE topic = $1 AND availability = $2 AND time = $3",
+		[topic, availability, time]
+	);
+	const matchingTrainees = result.rows;
+
+	return matchingTrainees;
 }
-
-// Sample trainees data
-const trainees = [
-  {
-    name: "John",
-    availability: ["Monday", "Tuesday"],
-    topicsOfInterest: ["JavaScript", "Python"],
-  },
-  {
-    name: "Alice",
-    availability: ["Tuesday", "Wednesday"],
-    topicsOfInterest: ["Java", "Ruby"],
-  },
-  // Add more trainee objects as needed
-];
 
 export default router;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -8,10 +9,45 @@ const AvailabilityForm = () => {
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedTime, setSelectedTime] = useState(null);
 
+	const generateTimeSlots = () => {
+		const timeSlots = [];
+		let hour = 10;
+		let minute = 0;
+
+		while (hour <= 18) {
+			const formattedHour = hour.toString().padStart(2, "0");
+			const formattedMinute = minute.toString().padStart(2, "0");
+			const time = `${formattedHour}:${formattedMinute}`;
+			const label = `${formattedHour}:${formattedMinute} - ${
+				hour + 2
+			}:${formattedMinute}`;
+
+			timeSlots.push(
+				<option key={time} value={time}>
+					{label}
+				</option>
+			);
+
+			hour += 2;
+		}
+
+		return timeSlots;
+	};
+
 	const handleAvailabilitySubmit = async () => {
 		try {
-			// Make an API call to submit trainee's availability, topic, and time slot
-			// Send the topic, selectedDate, and selectedTime data to the server
+			const availabilityData = {
+				topic: topic,
+				timeSlot: timeSlot,
+				selectedDate: selectedDate,
+				selectedTime: selectedTime,
+			};
+
+			// Make an API call to submit trainee's availability
+			await axios.post(
+				"http://localhost:3100/api/trainees/availability",
+				availabilityData
+			);
 
 			// Clear the input fields after submitting
 			setTopic("");
@@ -37,17 +73,16 @@ const AvailabilityForm = () => {
 				<option value="JavaScript">JavaScript</option>
 				<option value="Python">Python</option>
 				<option value="Java">Java</option>
-				<option value="Java">Sql</option>
-				<option value="Java">PM</option>
+				<option value="SQL">SQL</option>
+				<option value="PM">PM</option>
+				<option value="PHP">PHP</option>
 				{/* Add more options for other programming topics */}
 			</select>
+
 			<h2>Select Time Slot</h2>
 			<select value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)}>
 				<option value="">Select Time Slot</option>
-				<option value="Morning">Morning</option>
-				<option value="Afternoon">Afternoon</option>
-				<option value="Evening">Evening</option>
-				{/* Add more options for other time slots */}
+				{generateTimeSlots()}
 			</select>
 			<DatePicker
 				selected={selectedTime}

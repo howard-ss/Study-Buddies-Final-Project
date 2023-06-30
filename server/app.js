@@ -36,7 +36,13 @@
 import express from "express";
 import apiRouter from "./api";
 import config from "./utils/config";
-import { clientRouter, configuredHelmet, configuredMorgan, httpsOnly, logErrors } from "./utils/middleware";
+import {
+	clientRouter,
+	configuredHelmet,
+	configuredMorgan,
+	httpsOnly,
+	logErrors,
+} from "./utils/middleware";
 
 const apiRoot = "/api";
 
@@ -47,8 +53,8 @@ app.use(configuredHelmet());
 app.use(configuredMorgan());
 
 if (config.production) {
-  app.enable("trust proxy");
-  app.use(httpsOnly());
+	app.enable("trust proxy");
+	app.use(httpsOnly());
 }
 
 app.use(apiRoot, apiRouter);

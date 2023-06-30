@@ -1,38 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const MatchingTrainees = () => {
-	const [matchingTrainees, setMatchingTrainees] = useState([]);
+	const [matchedTrainees, setMatchedTrainees] = useState([]);
 
 	useEffect(() => {
-		const getMatchingTrainees = async () => {
-			try {
-				// Make an API call to retrieve matching trainees based on availability and topics of interest
-				const response = await fetch("/api/matching-trainees"); // Adjust the API endpoint if needed
-				const data = await response.json();
-
-				// Update the state with the retrieved data
-				setMatchingTrainees(data.matchingTrainees);
-			} catch (error) {
-				console.error("Error getting matching trainees:", error);
-			}
-		};
-
-		getMatchingTrainees();
+		fetchMatchedTrainees();
 	}, []);
+
+	const fetchMatchedTrainees = async () => {
+		try {
+			// Make an API call to fetch the matched trainees
+			const response = await axios.get("/api/matched-trainees");
+
+			// Update the state with the fetched matched trainees
+			setMatchedTrainees(response.data);
+		} catch (error) {
+			console.error("Error fetching matched trainees:", error);
+		}
+	};
 
 	return (
 		<div>
-			<h2>Matching Trainees</h2>
-			{matchingTrainees.length > 0 ? (
-				matchingTrainees.map((trainee) => (
-					<div key={trainee.traineeId}>
-						<h3>{trainee.name}</h3>
-						<p>Availability: {trainee.availability}</p>
-						<p>Topics of Interest: {trainee.topicsOfInterest}</p>
-					</div>
-				))
+			<h2>Matched Trainees</h2>
+			{matchedTrainees.length > 0 ? (
+				<ul>
+					{matchedTrainees.map((trainee) => (
+						<li key={trainee.id}>{trainee.name}</li>
+					))}
+				</ul>
 			) : (
-				<p>No matching trainees found</p>
+				<p>No matched trainees found.</p>
 			)}
 		</div>
 	);
