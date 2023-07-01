@@ -39,9 +39,14 @@ function RegisterPage() {
     setUserType(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const response = await axios.post("/api/register", {
+      name,
+      email,
+      password,
+      })
+      console.log(response.data);
     // Perform registration logic here
     // You can access the form values: name, email, password, confirmPassword, and phone
   };
@@ -68,25 +73,13 @@ function RegisterPage() {
           <label htmlFor="confirm-password">Confirm Password:</label>
           <input type="password" id="confirm-password" value={confirmPassword} onChange={handleConfirmPasswordChange} placeholder="Confirm your password" required />
         </div>
-        <div className="form-group">
-          <label htmlFor="phone">Phone No:</label>
-          <input type="tel" id="phone" value={phone} onChange={handlePhoneChange} placeholder="Enter your phone number" required />
-        </div>
+       
         <div className="form-group">
           <label htmlFor="cohort">Cohort:</label>
           <input type="text" id="cohort" value={cohort} onChange={handleCohortChange} placeholder="Enter your cohort" required />
         </div>
-        <div className="form-group">
-          <label htmlFor="userType">User Type:</label>
-          <select id="userType" value={userType} onChange={handleUserTypeChange} required>
-            <option value="">Select user type</option>
-            {userTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select> </div>
-        <button className="btn" type="submit">Register</button>
+       
+        <button className="btn" type="submit" onClick={handleSubmit}>Register</button>
       </form>
     </div>
   );
