@@ -5,7 +5,7 @@ import "./Login.css";
 import axios from "axios";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const response = await axios.post("/api/login", {
-      username,
+      email,
       password,
     })
     console.log(response.data);
@@ -37,14 +37,14 @@ function Login() {
           <h2 className="login-title">Login</h2>
           <form className="login-form" onSubmit={handleLogin}>
             <label htmlFor="login-username" className="login-label">
-              Username
+              Email
             </label>
             <input
               type="text"
-              id="login-username"
-              name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="login-email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="login-input"
             />
