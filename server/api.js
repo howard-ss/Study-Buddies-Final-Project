@@ -44,12 +44,12 @@ router.post("/login", (req, res) => {
 // Route for user registration
 router.post("/register", async (req, res) => {
 	try {
-		const { username, password, email, phone } = req.body;
+		const { username, password, email } = req.body;
 
 		// Save the user details to the database (implement your logic here)
 		await db.query(
 			"INSERT INTO users (username, password, email, phone) VALUES ($1, $2, $3, $4)",
-			[username, password, email, phone]
+			[username, password, email]
 		);
 
 		res.status(201).json({ message: "User registered successfully" });
