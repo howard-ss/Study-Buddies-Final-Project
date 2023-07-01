@@ -17,11 +17,12 @@ router.get("/", (_, res) => {
 // ];
 
 
-// // Login route
-// router.post("/login", (req, res) => {
-//   const { username, password } = req.body;
+// Login route
+router.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  console.log(req.body);
 
-//   // Find the user with the matching username
+  // Find the user with the matching username
 //   const user = users.find((user) => user.username === username);
 
 //   if (!user) {
@@ -37,7 +38,7 @@ router.get("/", (_, res) => {
 //   }
 //   // Login successful
 //   res.json({ message: "Login successful" });
-// });
+});
 
 
 // Route for user registration
