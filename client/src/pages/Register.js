@@ -39,7 +39,6 @@ function RegisterPage() {
     // You can access the form values: name, email, password, confirmPassword, and phone
   };
 
-
   return (
     <div className="container">
       <h2>Register</h2>
