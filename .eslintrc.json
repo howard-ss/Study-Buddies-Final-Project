@@ -5,6 +5,7 @@
 	},
 	"extends": ["@codeyourfuture/standard"],
 	"parser": "@babel/eslint-parser",
+	"requireConfigFile": false,
 	"root": true,
 	"rules": {
 		"indent": "off",
