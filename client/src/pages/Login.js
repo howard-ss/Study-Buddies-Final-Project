@@ -12,19 +12,26 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    try{
     const response = await axios.post("/api/login", {
       email,
       password,
     })
     console.log(response.data);
-    // TODO: Handle login logic
-  //   if (email === "name" && password === "password") {
-  //     navigate("/");
-  //   } else {
-  //     alert("Invalid email or password.");
-  //   }
-  // };
-  };
+    if (response.data.user) {
+      // Successful login, navigate to the desired page
+      navigate("/dashboard");
+    } else {
+      // Handle unsuccessful login, show an error message
+      alert("Invalid email or password.");
+    }
+  } catch (error) {
+    // Handle any errors that occurred during the login request
+    console.log("Error occurred during login:", error);
+    alert("An error occurred during login.");
+  }
+};
+
   const handleRegister = () => {
     navigate("/register");
   };
