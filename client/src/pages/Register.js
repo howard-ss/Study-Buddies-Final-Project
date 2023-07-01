@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./Register.css";
 import axios from "axios";
 
-
-
 function RegisterPage() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -39,7 +37,6 @@ function RegisterPage() {
     // Perform registration logic here
     // You can access the form values: name, email, password, confirmPassword, and phone
   };
-
 
   return (
     <div className="container">

@@ -18,10 +18,10 @@ function Login() {
     })
     console.log(response.data);
     // TODO: Handle login logic
-  //   if (username === "name" && password === "password") {
+  //   if (email === "name" && password === "password") {
   //     navigate("/");
   //   } else {
-  //     alert("Invalid username or password.");
+  //     alert("Invalid email or password.");
   //   }
   // };
   };
@@ -36,8 +36,8 @@ function Login() {
         <section>
           <h2 className="login-title">Login</h2>
           <form className="login-form" onSubmit={handleLogin}>
-            <label htmlFor="login-username" className="login-label">
-              Email
+            <label htmlFor="login-email" className="login-label">
+              Username
             </label>
             <input
               type="text"
