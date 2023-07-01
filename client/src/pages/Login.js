@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
+import axios from "axios";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -9,10 +10,15 @@ function Login() {
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    const response = await axios.post("/api/login", {
+      username,
+      password,
+    })
+    console.log(response.data);
     // TODO: Handle login logic
-  //   if (username === "admin" && password === "password") {
+  //   if (username === "name" && password === "password") {
   //     navigate("/");
   //   } else {
   //     alert("Invalid username or password.");
