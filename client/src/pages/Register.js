@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Register.css";
 import axios from "axios";
 
-
 function RegisterPage() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,7 +10,7 @@ function RegisterPage() {
   
 
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    setUserName(e.target.value);
   };
 
   const handleEmailChange = (e) => {

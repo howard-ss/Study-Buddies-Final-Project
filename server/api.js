@@ -12,6 +12,31 @@ router.get("/", (_, res) => {
 
 
 
+
+// Login route
+// router.post("/login", (req, res) => {
+//   const { username, password } = req.body;
+//   console.log(req.body);
+
+  // Find the user with the matching username
+//   const user = users.find((user) => user.username === username);
+
+//   if (!user) {
+//     // User not found
+//     res.status(401).json({ error: "Invalid credentials" });
+//     return;
+//   }
+
+//   if (user.password !== password) {
+//     // Passwords do not match
+//     res.status(401).json({ error: "Invalid credentials" });
+//     return;
+//   }
+//   // Login successful
+//   res.json({ message: "Login successful" });
+});
+
+
 // Route for user registration
 router.post("/register", async (req, res) => {
 	try {
@@ -19,7 +44,7 @@ router.post("/register", async (req, res) => {
 
 		// Save the user details to the database (implement your logic here)
 		await db.query(
-			"INSERT INTO users (username, password, email) VALUES ($1, $2, $3, $4)",
+			"INSERT INTO users (username, password, email, phone) VALUES ($1, $2, $3, $4)",
 			[username, password, email]
 		);
 
