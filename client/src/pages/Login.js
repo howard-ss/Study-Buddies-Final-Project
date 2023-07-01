@@ -89,13 +89,6 @@ function Login() {
                 Register now
               </button>
             </div>
-            <div className="social-login">
-              <button className="social-button">Facebook</button>
-              {/* Example: LinkedIn */}
-              <button className="social-button"> LinkedIn</button>
-              {/* Example: Twitter */}
-              <button className="social-button">Twitter</button>
-            </div>
           </form>
         </section>
       </main>
