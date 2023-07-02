@@ -20,7 +20,7 @@ function Login() {
     console.log(response.data);
     if (response.data.user) {
       // Successful login, navigate to the desired page
-      navigate("/dashboard");
+      navigate("/home");
     } else {
       // Handle unsuccessful login, show an error message
       alert("Invalid email or password.");
