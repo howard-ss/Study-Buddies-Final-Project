@@ -55,6 +55,35 @@ router.post("/register", async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 });
+
+router.post("/login", async (req, res) => {
+	const {  email, password } = req.body;
+	console.log(req.body);
+
+	// Assuming the user data is sent in the request body
+
+	// Construct the SQL query to insert the user data
+	const insertQuery =
+		"SELECT  * FROM users  WHERE email=$1 AND password=$2";
+	const insertValues = [ email, password ];
+
+	try{
+	// Execute the query to insert the user data and get the inserted record
+	const selectedResult = await db.query(insertQuery, insertValues)
+	
+		if (selectedResult.rows.length===1) {
+			const user = selectedResult.rows[0]
+			res.json ({user})
+		} else {
+			res.status(401).json("Invalid email or password");
+    }
+  } catch (error) {
+    console.log("Database error:", error);
+    res.status(500).json("An error occurred during login");
+}
+	});
+
+
 router.post("/avail", async (req, res) => {
 	 
 		const { user_id, selected_date, selected_time, topic } = req.body;
