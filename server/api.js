@@ -2,13 +2,14 @@ import { Router } from "express";
 import logger from "./utils/logger";
 import db from "./db";
 
+
 const router = Router();
 
 // Root route for welcoming everyone
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
 	res.json({ message: "Hello, world!" });
-});
+}); 
 
 
 
@@ -34,7 +35,7 @@ router.get("/", (_, res) => {
 //   }
 //   // Login successful
 //   res.json({ message: "Login successful" });
-});
+//});
 
 
 // Route for user registration
@@ -44,7 +45,7 @@ router.post("/register", async (req, res) => {
 
 		// Save the user details to the database (implement your logic here)
 		await db.query(
-			"INSERT INTO users (username, password, email, phone) VALUES ($1, $2, $3, $4)",
+			"INSERT INTO users (username, password, email) VALUES ($1, $2, $3)",
 			[username, password, email]
 		);
 
