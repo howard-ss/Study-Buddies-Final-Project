@@ -89,10 +89,10 @@ router.post("/register",  async (req, res) => {
 				.json({ error: "An error occurred while registering the user." });
 		} else {
 			const user = Result.rows[0];
-			console.log(user)
+			console.log(user);
 			console.log("User registered successfully:");
 
-			res.status(200).json({ email:user.email, name:user.name, id:user.id });
+			res.status(200).json({ email: user.email, name: user.name, id: user.id });
 		}
 	});
 });
