@@ -28,14 +28,16 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
     const response = await axios.post("/api/register", {
       userName,
       email,
       password,
       })
       console.log(response.data);
-    // Perform registration logic here
-    // You can access the form values: name, email, password, confirmPassword, and phone
+    }catch (error){
+      console.error("Error during registration:", error);
+    }
   };
 
   return (
