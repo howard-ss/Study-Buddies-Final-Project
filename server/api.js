@@ -139,7 +139,7 @@ router.post("/avail", async (req, res) => {
 				topic
 			);
 
-			if (matchingTrainees.length > 0) {
+			if (matchingTrainees.length > 3 && matchingTrainees<=5) {
 				// Match found, send a notification to the user
 				sendNotification(user_id, matchingTrainees);
 			}
