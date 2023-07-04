@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import "./Register.css";
 import axios from "axios";
 
-
-
 function RegisterPage() {
-  const [userName, setUserName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   
 
   const handleNameChange = (e) => {
-    setUserName(e.target.value);
+    setName(e.target.value);
   };
 
   const handleEmailChange = (e) => {
@@ -30,16 +28,17 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
     const response = await axios.post("/api/register", {
-      userName,
+      name,
       email,
       password,
       })
       console.log(response.data);
-    // Perform registration logic here
-    // You can access the form values: name, email, password, confirmPassword, and phone
+    }catch (error){
+      console.error("Error during registration:", error);
+    }
   };
-
 
   return (
     <div className="container">
@@ -47,7 +46,7 @@ function RegisterPage() {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
-          <input type="text" id="name" value={userName} onChange={handleNameChange} placeholder="Enter your name" required />
+          <input type="text" id="name" value={name} onChange={handleNameChange} placeholder="Enter your name" required />
         </div>
         <div className="form-group">
           <label htmlFor="email">Email:</label>

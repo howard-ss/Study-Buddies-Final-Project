@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About";
 import Register from "./pages/Register";
-import Home from "./pages/Home";
+//import Home from "./pages/Home";
 import Login from "./pages/Login";
 import AvailabilityForm from "./AvailabilityForm";
 import MatchingTrainees from "./MatchingTrainees";
