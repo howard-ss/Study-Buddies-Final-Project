@@ -1,9 +1,6 @@
 import { Router } from "express";
 import logger from "./utils/logger";
 import db from "./db";
-import sendNotification from "./utils/notification";
-
-
 
 const router = Router();
 
@@ -135,8 +132,19 @@ router.post("/avail", async (req, res) => {
 			"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
 			[user_id, selected_date, selected_time, topic]
 		);
+		 const matchingTrainees = await getMatchingTrainees(
+				user_id,
+				selected_date,
+				selected_time,
+				topic
+			);
 
-		res.status(201).json({ message: "User registered successfully" });
+			if (matchingTrainees.length > 0) {
+				// Match found, send a notification to the user
+				sendNotification(user_id, matchingTrainees);
+			}
+
+		res.status(201).json({ message: "We found a match" });
 	} catch (error) {
 		logger.error("Error registering user:", error);
 		res.status(500).json({ error: "Internal server error" });
@@ -163,15 +171,17 @@ router.post("/avail", async (req, res) => {
 // });
 
 // Function to retrieve matching trainees based on availability, topic, and time
-async function getMatchingTrainees(name,topics_of_interest, availability, time) {
+async function getMatchingTrainees(user_id,selected_date, selected_time, topic) {
 	// Implement the logic to fetch the matching trainees
 	// Return an array of matching trainees
 
 	// Example implementation:
+	console.log(selected_date, selected_time)
 	const result = await db.query(
-		"SELECT * FROM trainees WHERE name=$1 And topics_of_interest = $3 AND availability = $2 AND time = $4",
-		[name, topics_of_interest, availability, time]
+		"SELECT * FROM availability WHERE selected_date  = $1 AND selected_time  = $2 AND topic = $3 AND user_id != $4",
+		[selected_date, selected_time, topic, user_id]
 	);
+	
 	const matchingTrainees = result.rows;
 
 	return matchingTrainees;

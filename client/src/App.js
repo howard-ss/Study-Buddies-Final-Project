@@ -13,19 +13,24 @@ const App = () => {
   const [hasAccount, setHasAccount] = useState(false);
 
   return (
-
 		<div>
-      <Header hasAccount={hasAccount} />
-      <Routes>
-        <Route path="/" element={<AvailabilityForm />} />
-        <Route path="/" element={<MatchingTrainees />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login setHasAccount={setHasAccount} />} />
-        <Route path="/register" element={<Register setHasAccount={setHasAccount} />} />
-        </Routes>
-      <Footer />
-    </div>
-  );
+			<Header hasAccount={hasAccount} />
+			<Routes>
+				<Route path="/" element={<AvailabilityForm  />} />
+				<Route path="/" element={<MatchingTrainees />} />
+				<Route path="/about" element={<About />} />
+				<Route
+					path="/login"
+					element={<Login setHasAccount={setHasAccount} />}
+				/>
+				<Route
+					path="/register"
+					element={<Register setHasAccount={setHasAccount} />}
+				/>
+			</Routes>
+			<Footer />
+		</div>
+	);
 };
 
 export default App;

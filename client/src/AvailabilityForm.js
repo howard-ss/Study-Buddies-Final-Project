@@ -51,7 +51,7 @@
 
 // 		try {
 // 			const availabilityData = {
-// 				user_id: 2,
+// 				user_id:3,
 // 				selected_date: moment(selectedDate).format("YYYY-MM-DD"),
 // 				selected_time: selectedTime
 // 					? moment(selectedTime).format("HH:mm:ss")
@@ -114,19 +114,22 @@
 // };
 
 // export default AvailabilityForm;
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment-timezone";
+import sendNotification from "./sendNotification";
 
-const AvailabilityForm = () => {
+const AvailabilityForm = ({ userId }) => {
 	const [topic, setTopic] = useState("");
 	const [timeSlot, setTimeSlot] = useState("");
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedTime, setSelectedTime] = useState(null);
 	const [userTimeZone, setUserTimeZone] = useState("");
 	const [notification, setNotification] = useState("");
+	const [matchedTrainees, setMatchedTrainees] = useState([]);
 
 	useEffect(() => {
 		const detectUserTimeZone = () => {
@@ -167,11 +170,12 @@ const AvailabilityForm = () => {
 
 		try {
 			const availabilityData = {
-				user_id: 2,
-				selected_date: moment(selectedDate).format("YYYY-MM-DD"),
-				selected_time: selectedTime
-					? moment(selectedTime).format("HH:mm:ss")
-					: moment().format("HH:mm:ss"),
+				user_id: userId,
+				selected_date: selectedDate
+					? moment(selectedDate).format("YYYY-MM-DD")
+					: moment().format("YYYY-MM-DD"),
+				selected_time: timeSlot,
+					
 				topic,
 			};
 
@@ -184,23 +188,31 @@ const AvailabilityForm = () => {
 			setSelectedTime(null);
 
 			// Fetch matching trainees after submitting availability
-			await fetchMatchingTrainees();
+			// await fetchMatchingTrainees(
+			// 	availabilityData.selected_date,
+			// 	availabilityData.selected_time,
+			// 	availabilityData.user_id
+			// );
 		} catch (error) {
 			console.error("Error submitting availability:", error);
 		}
 	};
 
-	const [matchedTrainees, setMatchedTrainees] = useState([]);
-
-	const fetchMatchingTrainees = async () => {
+	const fetchMatchingTrainees = async (selectedDate, timeSlot,user_id) => {
 		try {
-			const response = await axios.get("/api/trainees", {
+			const response = await axios.get("/api/avail", {
 				params: {
+					availability: selectedDate
+						? moment(selectedDate).format("YYYY-MM-DD")
+						: moment().format("YYYY-MM-DD"),
+					time: timeSlot,
+						// ? moment(selectedTime).format("HH:mm:ss")
+						// : moment().format("HH:mm:ss"),
 					topic,
-					availability: moment(selectedDate).format("YYYY-MM-DD"),
-					time: selectedTime ? moment(selectedTime).format("HH:mm:ss") : null,
+					user_id
 				},
 			});
+
 			const data = response.data;
 			setMatchedTrainees(data.matchingTrainees);
 
@@ -214,9 +226,9 @@ const AvailabilityForm = () => {
 		}
 	};
 
-	useEffect(() => {
-		fetchMatchingTrainees();
-	}, [topic, selectedDate, selectedTime]);
+	// useEffect(() => {
+	// 	fetchMatchingTrainees(selectedDate, selectedTime);
+	// }, [topic, selectedDate, selectedTime]);
 
 	return (
 		<div>
@@ -241,7 +253,7 @@ const AvailabilityForm = () => {
 
 				<h2>Select Time Slot</h2>
 				<select value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)}>
-					<option value="">Select Time Slot</option>
+					<option value="time">Select Time Slot</option>
 					{generateTimeSlots()}
 				</select>
 				<DatePicker
