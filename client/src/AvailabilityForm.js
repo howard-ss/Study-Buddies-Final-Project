@@ -41,7 +41,17 @@ const AvailabilityForm = () => {
 			const availabilityData = {
 				user_id: 2,
 				selected_date: selectedDate,
-				selected_time: "17:00:00",
+				selected_time: selectedTime
+					? selectedTime.toLocaleTimeString([], {
+							hour: "2-digit",
+							minute: "2-digit",
+							hour12: false,
+					  })
+					: new Date().toLocaleTimeString([], {
+							hour: "2-digit",
+							minute: "2-digit",
+							hour12: false,
+					  }),
 				topic,
 			};
 
