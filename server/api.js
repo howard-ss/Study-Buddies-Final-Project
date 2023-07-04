@@ -1,6 +1,8 @@
 import { Router } from "express";
 import logger from "./utils/logger";
 import db from "./db";
+import sendNotification from "./utils/notification";
+
 
 
 const router = Router();
