@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment-timezone";
+
 
 const AvailabilityForm = () => {
 	const [topic, setTopic] = useState("");
 	const [timeSlot, setTimeSlot] = useState("");
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedTime, setSelectedTime] = useState(null);
+	const [userTimeZone, setUserTimeZone] = useState("");
+
+ useEffect(() => {
+		const detectUserTimeZone = () => {
+			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			setUserTimeZone(timeZone);
+		};
+
+		detectUserTimeZone();
+ }, []);
 
 	const generateTimeSlots = () => {
 		const timeSlots = [];
@@ -40,25 +52,14 @@ const AvailabilityForm = () => {
 		try {
 			const availabilityData = {
 				user_id: 2,
-				selected_date: selectedDate,
+				selected_date: moment(selectedDate).format("YYYY-MM-DD"),
 				selected_time: selectedTime
-					? selectedTime.toLocaleTimeString([], {
-							hour: "2-digit",
-							minute: "2-digit",
-							hour12: false,
-					  })
-					: new Date().toLocaleTimeString([], {
-							hour: "2-digit",
-							minute: "2-digit",
-							hour12: false,
-					  }),
+					? moment(selectedTime).format("HH:mm:ss")
+					: moment().format("HH:mm:ss"),
 				topic,
 			};
 
-			await axios.post(
-				"http://localhost:3000/api/avail",
-				availabilityData
-			);
+			await axios.post("http://localhost:3000/api/avail", availabilityData);
 
 			// Clear the input fields after submitting
 			setTopic("");
@@ -106,7 +107,7 @@ const AvailabilityForm = () => {
 					dateFormat="h:mm aa"
 					placeholderText="Select Time"
 				/>
-				<button type="submit" onClick={handleAvailabilitySubmit}>Submit</button>
+				<button type="submit">Submit</button>
 			</form>
 		</div>
 	);
