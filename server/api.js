@@ -1,6 +1,7 @@
 import { Router } from "express";
 import logger from "./utils/logger";
 import db from "./db";
+import sendNotification from "../client/src/sendNotification";
 
 const router = Router();
 
@@ -122,11 +123,9 @@ router.post("/login", async (req, res) => {
 
 
 router.post("/avail", async (req, res) => {
-	 
-		const { user_id, selected_date, selected_time, topic } = req.body;
-		console.log(req.body)
-		try{
-	
+	const { user_id, selected_date, selected_time, topic } = req.body;
+	console.log(req.body);
+	try {
 		// Save the user details to the database (implement your logic here)
 		await db.query(
 			"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
@@ -139,7 +138,21 @@ router.post("/avail", async (req, res) => {
 				topic
 			);
 
-			if (matchingTrainees.length > 3 && matchingTrainees<=5) {
+// 		if (matchingTrainees.length > 3 && matchingTrainees.length < 6) {
+// 			// Match found, send a notification to the user
+// 			// sendNotification(user_id, matchingTrainees);
+// 			sendNotification ( `We found a matching group: Group ${user_id}, Time ${selected_time}`);
+// 			res.status(200).json({ message });
+// 		} else {
+// 			res.status(500).json({ message: "No match found." });
+// 		}
+// 	} catch (error) {
+// 		logger.error("Error registering user:", error);
+// 		res.status(500).json({ error: "Internal server error" });
+// 	}
+// });
+
+			if (matchingTrainees.length > 3 ) {
 				// Match found, send a notification to the user
 				sendNotification(user_id, matchingTrainees);
 			}
