@@ -2,6 +2,7 @@ import { Router } from "express";
 import logger from "./utils/logger";
 import db from "./db";
 
+
 const router = Router();
 
 // Root route for welcoming everyone
