@@ -18,7 +18,9 @@ function Login() {
       password,
     })
     console.log(response.data);
+    localStorage.setItem("user", response.data.id.toString());
     if (response.data.user) {
+    
       // Successful login, navigate to the desired page
       navigate("/home");
     } else {
