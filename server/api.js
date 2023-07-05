@@ -19,7 +19,9 @@ router.post("/register", async (req, res) => {
 	try {
 		const { name, email, password } = req.body;
 
-
+const insertQuery =
+	"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
+const insertValues = [name, email, password];
 	// Execute the query to insert the user data and get the inserted record
 	 await db.query(insertQuery, insertValues, (insertError, Result) => {
 		if (insertError) {
@@ -37,10 +39,10 @@ router.post("/register", async (req, res) => {
 	});
 
 		// Save the user details to the database (implement your logic here)
-		await db.query(
-			"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
-			[name, email, password]
-		);
+		// await db.query(
+		// 	"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
+		// 	[name, email, password]
+		// );
 
 		res.status(201).json({ message: "User registered successfully" });
 	} catch (error) {
@@ -81,7 +83,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/avail", async (req, res) => {
 	const { user_id, selected_date, selected_time, topic } = req.body;
-	console.log(req.body);
+	// console.log(req.body);
 	try {
 		// Save the user details to the database (implement your logic here)
 		await db.query(
@@ -109,12 +111,13 @@ router.post("/avail", async (req, res) => {
 // 	}
 // });
 
-			if (matchingTrainees.length > 3 ) {
+			if (matchingTrainees.length > 3) {
 				// Match found, send a notification to the user
 				sendNotification(user_id, matchingTrainees);
+				res.status(201).json({ message: "We found a match" });
+			} else {
+				res.status(200).json({ message: "No match found" });
 			}
-
-		res.status(201).json({ message: "We found a match" });
 	} catch (error) {
 		logger.error("Error registering user:", error);
 		res.status(500).json({ error: "Internal server error" });
@@ -146,7 +149,7 @@ async function getMatchingTrainees(user_id,selected_date, selected_time, topic) 
 	// Return an array of matching trainees
 
 	// Example implementation:
-	console.log(selected_date, selected_time)
+	console.log(selected_date, selected_time);
 	const result = await db.query(
 		"SELECT * FROM availability WHERE selected_date  = $1 AND selected_time  = $2 AND topic = $3 AND user_id != $4",
 		[selected_date, selected_time, topic, user_id]
