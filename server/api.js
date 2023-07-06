@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
 		name: user.name,
 		id: user.id,
 	  };
-	  res.status(201).json(response);
+	  res.status(201).json({ message: "User registered successfully" });
 	} catch (error) {
 	  console.error("Error registering user:", error);
 	  res.status(500).json({ error: "Internal server error" });
@@ -51,6 +51,7 @@ router.post("/login", async (req, res) => {
 	// Execute the query to insert the user data and get the inserted record
 	const selectedResult = await db.query(insertQuery, insertValues)
 	
+
 		if (selectedResult.rows.length === 1) {
 			const user = selectedResult.rows[0];
 			res.json ({ id:user.id, email:user.email })
@@ -79,23 +80,7 @@ router.post("/avail", async (req, res) => {
 				selected_time,
 				topic,
 		 )
-			
-
-// 		if (matchingTrainees.length > 3 && matchingTrainees.length < 6) {
-// 			// Match found, send a notification to the user
-// 			
-// 			//  sendNotification ( `We found a matching group: Group ${user_id}, Time ${selected_time}`);
-
-// 			res.status(200).json({ message });
-// 		} else {
-// 			res.status(500).json({ message: "No match found." });
-// 		}
-// 	} catch (error) {
-// 		logger.error("Error registering user:", error);
-// 		res.status(500).json({ error: "Internal server error" });
-// }
-// });
-
+	
 			if (matchingTrainees.length > 3) {
 				// Match found, send a notification to the user
 				
@@ -108,25 +93,6 @@ router.post("/avail", async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 });
-// Route for retrieving matching trainees based on availability and topic
-// router.get("/trainees", async (req, res) => {
-// 	try {
-// 		const { name, topics_of_interest, availability, time } = req.query;
-
-		// Perform the necessary logic to fetch matching trainees based on availability, topic, and time
-// 		const matchingTrainees = await getMatchingTrainees(
-// 			name,
-// 			topics_of_interest,
-// 			availability,
-// 			time
-// 		);
-
-// 		res.json({ matchingTrainees });
-// 	} catch (error) {
-// 		logger.error("Error retrieving matching trainees:", error);
-// 		res.status(500).json({ error: "Internal server error" });
-// 	}
-// });
 
 // Function to retrieve matching trainees based on availability, topic, and time
 async function getMatchingTrainees(user_id,selected_date, selected_time, topic) {
@@ -136,7 +102,6 @@ async function getMatchingTrainees(user_id,selected_date, selected_time, topic) 
 	// Example implementation:
 	console.log(selected_date, selected_time);
 	const result = await db.query(
-		// "SELECT * FROM availability WHERE selected_date  = $1 AND selected_time  = $2 AND topic = $3 AND user_id != $4",
 		"SELECT * FROM availability WHERE  selected_date  = $1 AND selected_time = $2 AND topic = $3",
 
 		[selected_date, selected_time, topic ]
