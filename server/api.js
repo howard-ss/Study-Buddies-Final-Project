@@ -14,47 +14,10 @@ router.get("/", (_, res) => {
 
 
 // Route for user registration
-router.post("/register", async (req, res) => {
-	try {
-		const { name, email, password } = req.body;
-
-const insertQuery =
-	"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
-const insertValues = [name, email, password];
-	// Execute the query to insert the user data and get the inserted record
-	 await db.query(insertQuery, insertValues, (insertError, Result) => {
-		if (insertError) {
-			console.error("Error executing insert query:", insertError);
-			res
-				.status(500)
-				.json({ error: "An error occurred while registering the user." });
-		} else {
-			const user = Result.rows[0];
-			console.log(user);
-			console.log("User registered successfully:");
-
-			res.status(200).json({ email: user.email, name: user.name, id: user.id });
-		}
-	});
-
-		
 
 
-// 			res.status(200).json({ email: user.email, name: user.name, id: user.id });
-// 		}
-// 	});
-// 		// Save the user details to the database (implement your logic here)
-// 		await db.query(
-// 			"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
-// 			[name, email, password]
-// 		);
-// 		res.status(201).json({ message: "User registered successfully" });
-// 	} catch (error) {
-// 		logger.error("Error registering user:", error);
-// 		res.status(500).json({ error: "Internal server error" });
-// 	}
-// });
-//
+
+
 router.post("/register", async (req, res) => {
 	try {
 	  const { name, email, password } = req.body;
@@ -66,6 +29,7 @@ router.post("/register", async (req, res) => {
 	  await db.query(insertQuery, [name, email, password]);
   
 	  res.status(201).json({ message: "User registered successfully" });
+
 	} catch (error) {
 	  console.error("Error registering user:", error);
 	  res.status(500).json({ error: "Internal server error" });
