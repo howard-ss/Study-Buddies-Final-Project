@@ -93,22 +93,6 @@ router.post("/avail", async (req, res) => {
 				topic,
 		 )
 			
-
-// 		if (matchingTrainees.length > 3 && matchingTrainees.length < 6) {
-// 			// Match found, send a notification to the user
-// 			
-// 			//  sendNotification ( `We found a matching group: Group ${user_id}, Time ${selected_time}`);
-
-// 			res.status(200).json({ message });
-// 		} else {
-// 			res.status(500).json({ message: "No match found." });
-// 		}
-// 	} catch (error) {
-// 		logger.error("Error registering user:", error);
-// 		res.status(500).json({ error: "Internal server error" });
-// }
-// });
-
 			if (matchingTrainees.length > 3) {
 				// Match found, send a notification to the user
 				
