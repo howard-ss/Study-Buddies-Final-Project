@@ -122,9 +122,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment-timezone";
 import sendNotification from "./sendNotification";
 
-const AvailabilityForm = ({ userId }) => {
+const AvailabilityForm = () => {
 	const [topic, setTopic] = useState("");
 	const [timeSlot, setTimeSlot] = useState("");
+	const[matchEvent,setMatchEvent]=useState([])
+	const [userId, setUserId]=useState(localStorage.getItem("user"));
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedTime, setSelectedTime] = useState(null);
 	const [userTimeZone, setUserTimeZone] = useState("");
@@ -170,16 +172,16 @@ const AvailabilityForm = ({ userId }) => {
 
 		try {
 			const availabilityData = {
-				user_id: userId,
+				user_id:userId,
 				selected_date: selectedDate
 					? moment(selectedDate).format("YYYY-MM-DD")
 					: moment().format("YYYY-MM-DD"),
 				selected_time: timeSlot,
-					
 				topic,
 			};
 
-			await axios.post("http://localhost:3000/api/avail", availabilityData);
+			const response= await axios.post("http://localhost:3000/api/avail", availabilityData);
+			setMatchEvent(response.data.eventData);
 
 			// Clear the input fields after submitting
 			setTopic("");
@@ -202,14 +204,13 @@ const AvailabilityForm = ({ userId }) => {
 		try {
 			const response = await axios.get("/api/avail", {
 				params: {
+					user_id:userId,
 					availability: selectedDate
 						? moment(selectedDate).format("YYYY-MM-DD")
 						: moment().format("YYYY-MM-DD"),
 					time: timeSlot,
-						// ? moment(selectedTime).format("HH:mm:ss")
-						// : moment().format("HH:mm:ss"),
 					topic,
-					user_id
+					
 				},
 			});
 
@@ -271,14 +272,10 @@ const AvailabilityForm = ({ userId }) => {
 
 			{notification && <p>{notification}</p>}
 
-			{matchedTrainees.length > 0 && (
+			{matchEvent?.length > 0 && (
 				<div>
 					<h2>Matched Trainees:</h2>
-					<ul>
-						{matchedTrainees.map((trainee) => (
-							<li key={trainee.id}>{trainee.name}</li>
-						))}
-					</ul>
+					<h3>We found {matchEvent?.length} trainees who selected this time and topic.</h3>
 				</div>
 			)}
 		</div>
