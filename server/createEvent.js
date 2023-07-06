@@ -55,7 +55,11 @@ jwtClient.authorize((err, tokens) => {
 				(res.data.conferenceData &&
 					res.data.conferenceData.entryPoints &&
 					res.data.conferenceData.entryPoints[0].uri);
-			console.log("Meet link:", meetLink);
+
+			const eventId = res.data.id;
+			const videoCallName = eventId.replace(/[@]/g, "-").toLowerCase(); // Replace invalid characters with hyphens and convert to lowercase
+			const finalMeetLink = `https://meet.google.com/${videoCallName}`;
+			console.log("Event created:", finalMeetLink);
 		}
 	);
 });

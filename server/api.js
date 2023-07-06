@@ -38,11 +38,7 @@ const insertValues = [name, email, password];
 		}
 	});
 
-		// Save the user details to the database (implement your logic here)
-		// await db.query(
-		// 	"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
-		// 	[name, email, password]
-		// );
+		
 
 		res.status(201).json({ message: "User registered successfully" });
 	} catch (error) {
@@ -125,25 +121,6 @@ router.post("/avail", async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 });
-// Route for retrieving matching trainees based on availability and topic
-// router.get("/trainees", async (req, res) => {
-// 	try {
-// 		const { name, topics_of_interest, availability, time } = req.query;
-
-		// Perform the necessary logic to fetch matching trainees based on availability, topic, and time
-// 		const matchingTrainees = await getMatchingTrainees(
-// 			name,
-// 			topics_of_interest,
-// 			availability,
-// 			time
-// 		);
-
-// 		res.json({ matchingTrainees });
-// 	} catch (error) {
-// 		logger.error("Error retrieving matching trainees:", error);
-// 		res.status(500).json({ error: "Internal server error" });
-// 	}
-// });
 
 // Function to retrieve matching trainees based on availability, topic, and time
 async function getMatchingTrainees(user_id,selected_date, selected_time, topic) {
@@ -153,7 +130,6 @@ async function getMatchingTrainees(user_id,selected_date, selected_time, topic) 
 	// Example implementation:
 	console.log(selected_date, selected_time);
 	const result = await db.query(
-		// "SELECT * FROM availability WHERE selected_date  = $1 AND selected_time  = $2 AND topic = $3 AND user_id != $4",
 		"SELECT * FROM availability WHERE  selected_date  = $1 AND selected_time = $2 AND topic = $3",
 
 		[selected_date, selected_time, topic ]
