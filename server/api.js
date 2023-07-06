@@ -12,87 +12,37 @@ router.get("/", (_, res) => {
 	res.json({ message: "Hello, world!" });
 }); 
 
-
-
 // Route for user registration
-// router.post("/register", async (req, res) => {
-// 	try {
-// 		const { name, email, password } = req.body;
-
-// const insertQuery =
-// 	"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
-// const insertValues = [name, email, password];
-	
-// 	// Execute the query to insert the user data and get the inserted record
-// 	   await db.query(insertQuery, insertValues, (insertError, result) => {
-
-// 		if (insertError) {
-// 			console.error("Error executing insert query:", insertError);
-// 			res
-// 				.status(500)
-// 				.json({ error: "An error occurred while registering the user." });
-// 		} else {
-// 			const user = result.rows[0];
-			
-// 			console.log(user);
-// 			console.log("User registered successfully:");
-
-// 			res.status(200).json({ email: user.email, name: user.name, id: user.id });
-// 		}
-// 	   })
-
-// 		// Save the user details to the database (implement your logic here)
-
-// 		res.status(201).json({ message: "User registered successfully" });
-// 	}catch (error) {
-// 		logger.error("Error registering user:", error);
-// 		res.status(500).json({ error: "Internal server error" });
-// 	};
-// });
-
 router.post("/register", async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-const insertQuery =
-    "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
-const insertValues = [name, email, password];
-    // Execute the query to insert the user data and get the inserted record
-     await db.query(insertQuery, insertValues, (insertError, Result) => {
-        if (insertError) {
-            console.error("Error executing insert query:", insertError);
-            res
-                .status(500)
-                .json({ error: "An error occurred while registering the user." });
-        } else {
-            const user = Result.rows[0];
-            console.log(user);
-            console.log("User registered successfully:");
-            res.status(200).json({ email: user.email, name: user.name, id: user.id });
-        }
-    });
-        res.status(201).json({ message: "User registered successfully" });
-    } catch (error) {
-        logger.error("Error registering user:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-});
-
-
-
-
-
-
-
-
-
+	try {
+	  const { name, email, password } = req.body;
+	  // Define the insertQuery variable
+	  const insertQuery =
+		"INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING email, name, id";
+	  // Execute the query to insert the user data and get the inserted record
+	  const result = await db.query(insertQuery, [name, email, password]);
+	  const user = result.rows[0];
+	  // Exclude the password from the response
+	  const response = {
+		email: user.email,
+		name: user.name,
+		id: user.id,
+	  };
+	  res.status(201).json(response);
+	} catch (error) {
+	  console.error("Error registering user:", error);
+	  res.status(500).json({ error: "Internal server error" });
+	}
+  });
+  
 // Route for user login
 router.post("/login", async (req, res) => {
 	const {  email, password } = req.body;
 	console.log(req.body);
 
-	// Assuming the user data is sent in the request body
-
+	// Assuming the user data is sent in the request body,
 	// Construct the SQL query to insert the user data
+
 	const insertQuery =
 		"SELECT  * FROM users  WHERE email=$1 AND password=$2";
 	const insertValues = [ email, password ];
@@ -101,9 +51,9 @@ router.post("/login", async (req, res) => {
 	// Execute the query to insert the user data and get the inserted record
 	const selectedResult = await db.query(insertQuery, insertValues)
 	
-		if (selectedResult.rows.length = 1) {
-			const user = selectedResult.rows[0]
-			res.json ({id:user.id, email:user.email})
+		if (selectedResult.rows.length === 1) {
+			const user = selectedResult.rows[0];
+			res.json ({ id:user.id, email:user.email })
 		} else {
 			res.status(401).json("Invalid email or password");
     }
@@ -113,7 +63,7 @@ router.post("/login", async (req, res) => {
 }
 	});
 
-
+// Route for user availability
 router.post("/avail", async (req, res) => {
 	const { user_id, selected_date, selected_time, topic } = req.body;
 	// console.log(req.body);
