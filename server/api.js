@@ -6,11 +6,12 @@ import sendNotification from "../client/src/sendNotification";
 
 const router = Router();
 
-// Root route for welcoming everyone
+//Root route for welcoming everyone
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
 	res.json({ message: "Hello, world!" });
 }); 
+
 
 // Route for user registration
 router.post("/register", async (req, res) => {
@@ -24,14 +25,32 @@ const insertValues = [name, email, password];
 	 await db.query(insertQuery, insertValues, (insertError) => {
 
 
+
 	});
 		res.status(201).json({ message: "User registered successfully" });
-	} catch (error) {
-		logger.error("Error registering user:", error);
-		res.status(500).json({ error: "Internal server error" });
-	}
 
-});
+
+
+router.post("/register", async (req, res) => {
+	try {
+	  const { name, email, password } = req.body;
+  
+	  // Define the insertQuery variable
+	  const insertQuery = "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
+  
+	  // Execute the query to insert the user data and get the inserted record
+	  await db.query(insertQuery, [name, email, password]);
+  
+	  res.status(201).json({ message: "User registered successfully" });
+
+	} catch (error) {
+	  console.error("Error registering user:", error);
+	  res.status(500).json({ error: "Internal server error" });
+	}
+  });
+  
+//
+
 
 // Route for user login
 router.post("/login", async (req, res) => {
@@ -39,12 +58,11 @@ router.post("/login", async (req, res) => {
 	console.log(req.body);
 
 	// Assuming the user data is sent in the request body
-
 	// Construct the SQL query to insert the user data
+
 	const insertQuery =
 		"SELECT  * FROM users  WHERE email=$1 AND password=$2";
 	const insertValues = [ email, password ];
-
 	try{
 	// Execute the query to insert the user data and get the inserted record
 	const selectedResult = await db.query(insertQuery, insertValues)
@@ -53,7 +71,7 @@ router.post("/login", async (req, res) => {
 			const user = selectedResult.rows[0]
 			res.json ({id:user.id, email:user.email})
 		} else {
-			res.status(401).json("Invalid email or password");
+			res.status(401).json("Invalid email or password. Please register if you don't have an account.");
     }
   } catch (error) {
     console.log("Database error:", error);
@@ -62,6 +80,7 @@ router.post("/login", async (req, res) => {
 	});
 
 
+//Route for user avilability
 router.post("/avail", async (req, res) => {
 	const { user_id, selected_date, selected_time, topic } = req.body;
 	// console.log(req.body);
