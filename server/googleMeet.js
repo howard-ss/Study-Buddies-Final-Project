@@ -1,21 +1,25 @@
-require("dotenv").config();
-const dayjs = require("dayjs");
-const express = require("express");
-const { google } = require("googleapis");
-const { v4: uuid } = require("uuid");
+dotenv.config({});
+import dayjs from "dayjs";
+import express  from "express";
+import { google } from "googleapis";
+import { v4 as uuid } from "uuid";
 const axios = require("axios");
 
-const privatekey = require("./serviceAccount.json"); // Replace with your service account key JSON file
-const calendar = google.calendar({ version: "v3", auth: process.env.API_KEY });
+const calendar = google.calendar({ version: "v3", auth:process.env.API_KEY });
+
+// const privatekey = require("./serviceAccount.json"); // Replace with your service account key JSON file
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+const PORT = process.env.NODE_ENV || 8000;
+
 const oauth2Client = new google.auth.OAuth2(
 	process.env.CLIENT_ID,
 	process.env.CLIENT_SECRET,
 	process.env.REDIRECT_URL
 );
 const scopes = ["https://www.googleapis.com/auth/calendar"];
+
 const token = "";
 
 app.get("/google", (req, res) => {
@@ -46,7 +50,7 @@ app.get("/schedule_event", async (req, res) => {
 			summary: "This is an important invitation",
 			description: "Some important and amazing events",
 			start: {
-				dateTime: dayjs(new Date()).add(1, "day").add(1, "hour").toISOString(),
+				dateTime: dayjs(new Date()).add(1, "day").toISOString(),
 				timezone: "Europe/London",
 			},
 			end: {
