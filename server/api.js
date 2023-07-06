@@ -12,8 +12,6 @@ router.get("/", (_, res) => {
 	res.json({ message: "Hello, world!" });
 }); 
 
-
-
 // Route for user registration
 router.post("/register", async (req, res) => {
 	try {
@@ -23,23 +21,20 @@ const insertQuery =
 	"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
 const insertValues = [name, email, password];
 	// Execute the query to insert the user data and get the inserted record
-	 await db.query(insertQuery, insertValues, (insertError, Result) => {
-		if (insertError) {
-			console.error("Error executing insert query:", insertError);
-			res
-				.status(500)
-				.json({ error: "An error occurred while registering the user." });
-		} else {
-			const user = Result.rows[0];
-			console.log(user);
-			console.log("User registered successfully:");
+	 await db.query(insertQuery, insertValues, (insertError) => {
+		// if (insertError) {
+	// 		console.error("Error executing insert query:", insertError);
+	// 		res
+	// 			.status(500)
+	// 			.json({ error: "An error occurred while registering the user." });
+	// 	} else {
+	// 		const user = Result.rows[0];
+	// 		console.log(user);
+	// 		console.log("User registered successfully:");
 
-			res.status(200).json({ email: user.email, name: user.name, id: user.id });
-		}
+	// 		res.status(200).json({ email: user.email, name: user.name, id: user.id });
+		// }
 	});
-
-		
-
 		res.status(201).json({ message: "User registered successfully" });
 	} catch (error) {
 		logger.error("Error registering user:", error);

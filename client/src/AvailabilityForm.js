@@ -143,7 +143,7 @@ const AvailabilityForm = () => {
       {notification && <p>{notification}</p>}
 
       {matchEvent?.length > 0 && (
-        <div>
+        <div className="availability-form">
           <h2>Matched Trainees:</h2>
           <h3>We found {matchEvent?.length} trainees who selected this time and topic.</h3>
         </div>
