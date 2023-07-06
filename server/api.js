@@ -14,20 +14,7 @@ router.get("/", (_, res) => {
 
 
 // Route for user registration
-router.post("/register", async (req, res) => {
-	try {
-		const { name, email, password } = req.body;
 
-const insertQuery =
-	"INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
-const insertValues = [name, email, password];
-	// Execute the query to insert the user data and get the inserted record
-	 await db.query(insertQuery, insertValues, (insertError) => {
-
-
-
-	});
-		res.status(201).json({ message: "User registered successfully" });
 
 
 
