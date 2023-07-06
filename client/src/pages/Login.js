@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -18,8 +17,9 @@ function Login() {
       password,
     })
     console.log(response.data);
-    localStorage.setItem("user", response.data.id.toString());
-    if (response.data.user) {
+
+    
+  if (response.data.user) {
     
       // Successful login, navigate to the desired page
       navigate("/home");
