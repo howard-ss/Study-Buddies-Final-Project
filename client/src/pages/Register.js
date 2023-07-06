@@ -35,8 +35,11 @@ function RegisterPage() {
       password,
       })
       console.log(response.data);
+      alert("Registration successful!"); // Display success message
     }catch (error){
       console.error("Error during registration:", error);
+      alert("An error occurred during registration."); // Display error message
+  
     }
   };
 
