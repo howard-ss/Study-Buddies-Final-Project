@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -18,6 +17,7 @@ function Login() {
       password,
     })
     console.log(response.data);
+    
     if (response.data.user) {
       // Successful login, navigate to the desired page
       navigate("/home");
