@@ -1,7 +1,7 @@
 import { Router } from "express";
 import logger from "./utils/logger";
 import db from "./db";
-import sendNotification from "../client/src/sendNotification";
+
 
 
 const router = Router();
@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
 		name: user.name,
 		id: user.id,
 	  };
-	  res.status(201).json(response);
+	  res.status(201).json({ message: "User registered successfully" });
 	} catch (error) {
 	  console.error("Error registering user:", error);
 	  res.status(500).json({ error: "Internal server error" });
@@ -79,22 +79,6 @@ router.post("/avail", async (req, res) => {
 				selected_time,
 				topic,
 		 )
-			
-
-// 		if (matchingTrainees.length > 3 && matchingTrainees.length < 6) {
-// 			// Match found, send a notification to the user
-// 			
-// 			//  sendNotification ( `We found a matching group: Group ${user_id}, Time ${selected_time}`);
-
-// 			res.status(200).json({ message });
-// 		} else {
-// 			res.status(500).json({ message: "No match found." });
-// 		}
-// 	} catch (error) {
-// 		logger.error("Error registering user:", error);
-// 		res.status(500).json({ error: "Internal server error" });
-// }
-// });
 
 			if (matchingTrainees.length > 3) {
 				// Match found, send a notification to the user
@@ -108,26 +92,6 @@ router.post("/avail", async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 });
-// Route for retrieving matching trainees based on availability and topic
-// router.get("/trainees", async (req, res) => {
-// 	try {
-// 		const { name, topics_of_interest, availability, time } = req.query;
-
-		// Perform the necessary logic to fetch matching trainees based on availability, topic, and time
-// 		const matchingTrainees = await getMatchingTrainees(
-// 			name,
-// 			topics_of_interest,
-// 			availability,
-// 			time
-// 		);
-
-// 		res.json({ matchingTrainees });
-// 	} catch (error) {
-// 		logger.error("Error retrieving matching trainees:", error);
-// 		res.status(500).json({ error: "Internal server error" });
-// 	}
-// });
-
 // Function to retrieve matching trainees based on availability, topic, and time
 async function getMatchingTrainees(user_id,selected_date, selected_time, topic) {
 	// Implement the logic to fetch the matching trainees
