@@ -1,10 +1,9 @@
 import { Router } from "express";
 import logger from "./utils/logger";
 import db from "./db";
-import sendNotification from "../client/src/sendNotification";
+ 
 
-
-const router = Router();
+const router = Router(); 
 
 // Root route for welcoming everyone
 router.get("/", (_, res) => {
