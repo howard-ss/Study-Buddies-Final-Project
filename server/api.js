@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { google } from "googleapis";
 import logger from "./utils/logger";
 import db from "./db";
 import sendNotification from "../client/src/sendNotification";
@@ -18,25 +19,43 @@ router.get("/", (_, res) => {
 
 
 
+// router.post("/register", async (req, res) => {
+// 	try {
+// 	  const { name, email, password } = req.body;
+  
+// 	  // Define the insertQuery variable
+// 	  const insertQuery = "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
+  
+// 	  // Execute the query to insert the user data and get the inserted record
+// 	  await db.query(insertQuery, [name, email, password]);
+  
+// 	  res.status(201).json({ message: "User registered successfully" });
+
+// 	} catch (error) {
+// 	  console.error("Error registering user:", error);
+// 	  res.status(500).json({ error: "Internal server error" });
+// 	}
+//   });
+  
 router.post("/register", async (req, res) => {
 	try {
-	  const { name, email, password } = req.body;
-  
-	  // Define the insertQuery variable
-	  const insertQuery = "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
-  
-	  // Execute the query to insert the user data and get the inserted record
-	  await db.query(insertQuery, [name, email, password]);
-  
-	  res.status(201).json({ message: "User registered successfully" });
+		const { name, email, password } = req.body;
 
+		// Define the insertQuery variable
+		const insertQuery =
+			"INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING email, name, id";
+
+		// Execute the query to insert the user data and get the inserted record
+		const result = await db.query(insertQuery, [name, email, password]);
+		const user = result.rows[0];
+
+		res.status(201).json({ email: user.email, name: user.name, id: user.id });
 	} catch (error) {
-	  console.error("Error registering user:", error);
-	  res.status(500).json({ error: "Internal server error" });
+		console.error("Error registering user:", error);
+		res.status(500).json({ error: "Internal server error" });
 	}
-  });
-  
-//
+});
+
 
 
 // Route for user login
@@ -77,6 +96,7 @@ router.post("/avail", async (req, res) => {
 			"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
 			[user_id, selected_date, selected_time, topic]
 		);
+		
 		 const matchingTrainees = await getMatchingTrainees(
 				user_id,
 				selected_date,
