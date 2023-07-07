@@ -2,82 +2,61 @@ import { Router } from "express";
 import { google } from "googleapis";
 import logger from "./utils/logger";
 import db from "./db";
-import sendNotification from "../client/src/sendNotification";
+ 
 
+const router = Router(); 
 
-const router = Router();
-
-//Root route for welcoming everyone
+// Root route for welcoming everyone
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
 	res.json({ message: "Hello, world!" });
 }); 
 
-
 // Route for user registration
 
-
-
-
-// router.post("/register", async (req, res) => {
-// 	try {
-// 	  const { name, email, password } = req.body;
-  
-// 	  // Define the insertQuery variable
-// 	  const insertQuery = "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
-  
-// 	  // Execute the query to insert the user data and get the inserted record
-// 	  await db.query(insertQuery, [name, email, password]);
-  
-// 	  res.status(201).json({ message: "User registered successfully" });
-
-// 	} catch (error) {
-// 	  console.error("Error registering user:", error);
-// 	  res.status(500).json({ error: "Internal server error" });
-// 	}
-//   });
-  
 router.post("/register", async (req, res) => {
 	try {
-		const { name, email, password } = req.body;
-
-		// Define the insertQuery variable
-		const insertQuery =
-			"INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING email, name, id";
-
-		// Execute the query to insert the user data and get the inserted record
-		const result = await db.query(insertQuery, [name, email, password]);
-		const user = result.rows[0];
-
-		res.status(201).json({ email: user.email, name: user.name, id: user.id });
+	  const { name, email, password } = req.body;
+	  // Define the insertQuery variable
+	  const insertQuery =
+		"INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING email, name, id";
+	  // Execute the query to insert the user data and get the inserted record
+	  const result = await db.query(insertQuery, [name, email, password]);
+	  const user = result.rows[0];
+	  // Exclude the password from the response
+	  const response = {
+		email: user.email,
+		name: user.name,
+		id: user.id,
+	  };
+	  res.status(201).json({ message: "User registered successfully" });
 	} catch (error) {
 		console.error("Error registering user:", error);
 		res.status(500).json({ error: "Internal server error" });
 	}
-});
-
-
 
 // Route for user login
 router.post("/login", async (req, res) => {
 	const {  email, password } = req.body;
 	console.log(req.body);
 
-	// Assuming the user data is sent in the request body
+	// Assuming the user data is sent in the request body,
 	// Construct the SQL query to insert the user data
 
 	const insertQuery =
 		"SELECT  * FROM users  WHERE email=$1 AND password=$2";
 	const insertValues = [ email, password ];
+
 	try{
 	// Execute the query to insert the user data and get the inserted record
 	const selectedResult = await db.query(insertQuery, insertValues)
 	
-		if (selectedResult.rows.length=1) {
-			const user = selectedResult.rows[0]
-			res.json ({id:user.id, email:user.email})
+
+		if (selectedResult.rows.length === 1) {
+			const user = selectedResult.rows[0];
+			res.json ({ id:user.id, email:user.email })
 		} else {
-			res.status(401).json("Invalid email or password. Please register if you don't have an account.");
+			res.status(401).json("Invalid email or password");
     }
   } catch (error) {
     console.log("Database error:", error);
@@ -85,8 +64,7 @@ router.post("/login", async (req, res) => {
 }
 	});
 
-
-//Route for user avilability
+// Route for user availability
 router.post("/avail", async (req, res) => {
 	const { user_id, selected_date, selected_time, topic } = req.body;
 	// console.log(req.body);
@@ -103,7 +81,7 @@ router.post("/avail", async (req, res) => {
 				selected_time,
 				topic,
 		 )
-			
+	
 			if (matchingTrainees.length > 3) {
 				// Match found, send a notification to the user
 				
