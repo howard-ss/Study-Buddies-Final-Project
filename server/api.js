@@ -2,7 +2,7 @@ import { Router } from "express";
 import { google } from "googleapis";
 import logger from "./utils/logger";
 import db from "./db";
- 
+
 
 const router = Router(); 
 
@@ -81,7 +81,7 @@ router.post("/avail", async (req, res) => {
 				selected_time,
 				topic,
 		 )
-	
+
 			if (matchingTrainees.length > 3) {
 				// Match found, send a notification to the user
 				
