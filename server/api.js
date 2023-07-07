@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { google } from "googleapis";
 import logger from "./utils/logger";
 import db from "./db";
  
@@ -12,6 +13,7 @@ router.get("/", (_, res) => {
 }); 
 
 // Route for user registration
+
 router.post("/register", async (req, res) => {
 	try {
 	  const { name, email, password } = req.body;
@@ -29,11 +31,10 @@ router.post("/register", async (req, res) => {
 	  };
 	  res.status(201).json({ message: "User registered successfully" });
 	} catch (error) {
-	  console.error("Error registering user:", error);
-	  res.status(500).json({ error: "Internal server error" });
+		console.error("Error registering user:", error);
+		res.status(500).json({ error: "Internal server error" });
 	}
-  });
-  
+
 // Route for user login
 router.post("/login", async (req, res) => {
 	const {  email, password } = req.body;
@@ -73,6 +74,7 @@ router.post("/avail", async (req, res) => {
 			"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
 			[user_id, selected_date, selected_time, topic]
 		);
+		
 		 const matchingTrainees = await getMatchingTrainees(
 				user_id,
 				selected_date,
