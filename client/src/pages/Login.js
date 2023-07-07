@@ -17,8 +17,10 @@ function Login() {
       password,
     })
     console.log(response.data);
+
     
-    if (response.data.user) {
+  if (response.data.user) {
+    
       // Successful login, navigate to the desired page
       navigate("/home");
     } else {

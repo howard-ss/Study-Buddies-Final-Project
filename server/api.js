@@ -1,10 +1,10 @@
 import { Router } from "express";
+import { google } from "googleapis";
 import logger from "./utils/logger";
 import db from "./db";
 
 
-
-const router = Router();
+const router = Router(); 
 
 // Root route for welcoming everyone
 router.get("/", (_, res) => {
@@ -13,6 +13,7 @@ router.get("/", (_, res) => {
 }); 
 
 // Route for user registration
+
 router.post("/register", async (req, res) => {
 	try {
 	  const { name, email, password } = req.body;
@@ -30,11 +31,10 @@ router.post("/register", async (req, res) => {
 	  };
 	  res.status(201).json({ message: "User registered successfully" });
 	} catch (error) {
-	  console.error("Error registering user:", error);
-	  res.status(500).json({ error: "Internal server error" });
+		console.error("Error registering user:", error);
+		res.status(500).json({ error: "Internal server error" });
 	}
-  });
-  
+
 // Route for user login
 router.post("/login", async (req, res) => {
 	const {  email, password } = req.body;
@@ -51,6 +51,7 @@ router.post("/login", async (req, res) => {
 	// Execute the query to insert the user data and get the inserted record
 	const selectedResult = await db.query(insertQuery, insertValues)
 	
+
 		if (selectedResult.rows.length === 1) {
 			const user = selectedResult.rows[0];
 			res.json ({ id:user.id, email:user.email })
@@ -73,6 +74,7 @@ router.post("/avail", async (req, res) => {
 			"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
 			[user_id, selected_date, selected_time, topic]
 		);
+		
 		 const matchingTrainees = await getMatchingTrainees(
 				user_id,
 				selected_date,
@@ -92,6 +94,7 @@ router.post("/avail", async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 });
+
 // Function to retrieve matching trainees based on availability, topic, and time
 async function getMatchingTrainees(user_id,selected_date, selected_time, topic) {
 	// Implement the logic to fetch the matching trainees
@@ -100,7 +103,6 @@ async function getMatchingTrainees(user_id,selected_date, selected_time, topic) 
 	// Example implementation:
 	console.log(selected_date, selected_time);
 	const result = await db.query(
-		// "SELECT * FROM availability WHERE selected_date  = $1 AND selected_time  = $2 AND topic = $3 AND user_id != $4",
 		"SELECT * FROM availability WHERE  selected_date  = $1 AND selected_time = $2 AND topic = $3",
 
 		[selected_date, selected_time, topic ]
