@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import axios from "axios";
+import loginImage from "../public/cyf.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -39,9 +40,12 @@ const handleLogin = async (e) => {
 
   return (
     <div className="login-container">
-      <h1>Study Buddies Page</h1>
+      <div className="image-container">
+        <img src={loginImage} alt="Study" />
+      </div>
       <main>
         <section>
+        <h1>Study Buddies Page</h1>
           <h2 className="login-title">Login</h2>
           <form className="login-form" onSubmit={handleLogin}>
             <label htmlFor="login-email" className="login-label">
