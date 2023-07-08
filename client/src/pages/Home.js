@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import AvailabilityForm from "./AvailabilityForm";
 
 import "./Home.css";
 import logo from "./logo.svg";

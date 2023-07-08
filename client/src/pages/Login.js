@@ -9,30 +9,29 @@ function Login() {
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try{
-    const response = await axios.post("/api/login", {
-      email,
-      password,
-    })
-    console.log(response.data);
+const handleLogin = async (e) => {
+	e.preventDefault();
+	try {
+		const response = await axios.post("/api/login", {
+			email,
+			password,
+		});
+		console.log(response.data);
 
-    
-  if (response.data.user) {
-    
-      // Successful login, navigate to the desired page
-      navigate("/home");
-    } else {
-      // Handle unsuccessful login, show an error message
-      alert("Invalid email or password.");
-    }
-  } catch (error) {
-    // Handle any errors that occurred during the login request
-    console.log("Error occurred during login:", error);
-    alert("An error occurred during login.");
-  }
+		if (response.data.user) {
+			// Successful login, navigate to the desired page
+			navigate("/AvailabilityForm");
+		} else {
+			// Handle unsuccessful login, show an error message
+			alert("Invalid email or password.");
+		}
+	} catch (error) {
+		// Handle any errors that occurred during the login request
+		console.log("Error occurred during login:", error);
+		alert("An error occurred during login.");
+	}
 };
+
 
   const handleRegister = () => {
     navigate("/register");

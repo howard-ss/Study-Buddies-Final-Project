@@ -6,7 +6,7 @@ import About from "./pages/About";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import AvailabilityForm from "./AvailabilityForm";
+import AvailabilityForm from "./pages/AvailabilityForm";
 import MatchingTrainees from "./MatchingTrainees";
 
 const App = () => {
