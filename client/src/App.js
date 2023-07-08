@@ -16,8 +16,8 @@ const App = () => {
 		<div>
 			<Header hasAccount={hasAccount} />
 			<Routes>
-				<Route path="/" element={<AvailabilityForm  />} />
-				<Route path="/" element={<MatchingTrainees />} />
+				<Route path="/dashboard" element={<AvailabilityForm  />} />
+				{/* <Route path="/" element={<MatchingTrainees />} /> */}
 				<Route path="/about" element={<About />} />
 				<Route
 					path="/login"
@@ -33,11 +33,11 @@ const App = () => {
 	);
 };
 
-const Home = () => (
-  <div>
-    <h1>Welcome to the Main Page</h1>
-    <p>Choose an option from the navigation menu.</p>
-  </div>
-);
+// const Home = () => (
+//   <div>
+//     <h1>Welcome to the Main Page</h1>
+//     <p>Choose an option from the navigation menu.</p>
+//   </div>
+// );
 
 export default App;
