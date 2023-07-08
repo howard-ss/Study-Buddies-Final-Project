@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -6,11 +7,23 @@ import About from "./pages/About";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import AvailabilityForm from "./AvailabilityForm";
+=======
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import About from "./pages/About";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import AvailabilityForm from "./pages/AvailabilityForm";
+>>>>>>> 9298b6827015c0dc0046017e9a39d0e4fee0b3da
 import MatchingTrainees from "./MatchingTrainees";
 
 const App = () => {
   const [hasAccount, setHasAccount] = useState(false);
 
+<<<<<<< HEAD
 
   return (
       <div>
@@ -25,6 +38,27 @@ const App = () => {
       </Routes>
     </div>
   );
+=======
+  return (
+		<div>
+			<Header hasAccount={hasAccount} />
+			<Routes>
+				<Route path="/" element={<AvailabilityForm  />} />
+				<Route path="/" element={<MatchingTrainees />} />
+				<Route path="/about" element={<About />} />
+				<Route
+					path="/login"
+					element={<Login setHasAccount={setHasAccount} />}
+				/>
+				<Route
+					path="/register"
+					element={<Register setHasAccount={setHasAccount} />}
+				/>
+			</Routes>
+			<Footer />
+		</div>
+	);
+>>>>>>> 9298b6827015c0dc0046017e9a39d0e4fee0b3da
 };
 
 const Home = () => (

@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from "react";
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
 
-const MatchingTrainees = () => {
-	const [matchingTrainees, setMatchingTrainees] = useState([]);
+// const MatchingTrainees = () => {
+// 	const [matchedTrainees, setMatchedTrainees] = useState([]);
 
-	useEffect(() => {
-		const getMatchingTrainees = async () => {
-			try {
-				// Make an API call to retrieve matching trainees based on availability and topics of interest
-				const response = await fetch("/api/matching-trainees"); // Adjust the API endpoint if needed
-				const data = await response.json();
+// 	useEffect(() => {
+// 		const fetchMatchedTrainees = async () => {
+// 			try {
+// 				const response = await axios.get("/api/trainees");
+// 				const data = response.data;
+// 				setMatchedTrainees(data.matchingTrainees);
+// 			} catch (error) {
+// 				console.error("Error fetching matched trainees:", error);
+// 			}
+// 		};
 
-				// Update the state with the retrieved data
-				setMatchingTrainees(data.matchingTrainees);
-			} catch (error) {
-				console.error("Error getting matching trainees:", error);
-			}
-		};
+// 		fetchMatchedTrainees();
+// 	}, []);
 
-		getMatchingTrainees();
-	}, []);
+// 	return (
+// 		<div>
+// 			<h2>Matched Trainees</h2>
+// 			{matchedTrainees.length === 0 ? (
+// 				<p>No trainees matched at the moment.</p>
+// 			) : (
+// 				<ul>
+// 					{matchedTrainees.map((trainee) => (
+// 						<li key={trainee.id}>
+// 							Trainee ID: {trainee.id}, Name: {trainee.username}, Availability:{" "}
+// 							{trainee.availability}, Topics of Interest:{" "}
+// 							{trainee.topics_of_interest}
+// 						</li>
+// 					))}
+// 				</ul>
+// 			)}
+// 		</div>
+// 	);
+// };
 
-	return (
-		<div>
-			<h2>Matching Trainees</h2>
-			{matchingTrainees.length > 0 ? (
-				matchingTrainees.map((trainee) => (
-					<div key={trainee.traineeId}>
-						<h3>{trainee.name}</h3>
-						<p>Availability: {trainee.availability}</p>
-						<p>Topics of Interest: {trainee.topicsOfInterest}</p>
-					</div>
-				))
-			) : (
-				<p>No matching trainees found</p>
-			)}
-		</div>
-	);
-};
-
-export default MatchingTrainees;
+// export default MatchingTrainees;
