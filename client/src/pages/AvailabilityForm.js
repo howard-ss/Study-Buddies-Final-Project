@@ -102,8 +102,12 @@ console.log(topic, timeSlot);
     }
   };
 
-  return (
+  return (      
     <div className="availability-form">
+      <div className="image-container">
+        <img src={mainImage} alt="Study" />
+      </div>
+      <div className="form-container">
       <h2>Enter Your Availability</h2>
       <form onSubmit={handleAvailabilitySubmit}>
         <DatePicker
@@ -141,18 +145,14 @@ console.log(topic, timeSlot);
         />
         <button type="submit">Submit</button>
       </form>
-      <div> 
-        <img src={mainImage}></img>
-      </div>
-
       {notification && <p>{notification}</p>}
-
       {matchEvent?.length > 0 && (
-        <div className="availability-form">
+        <div className="matched-trainees-container">
           <h2>Matched Trainees:</h2>
           <h3>We found {matchEvent?.length} trainees who selected this time and topic.</h3>
         </div>
       )}
+      </div>
     </div>
   );
 };
