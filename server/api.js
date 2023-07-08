@@ -214,6 +214,5 @@ async function getMatchingTrainees(
 	const matchingTrainees = result.rows;
 	return matchingTrainees;
 }
-});
 
 export default router;
