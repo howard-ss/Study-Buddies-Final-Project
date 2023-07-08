@@ -40,6 +40,7 @@ function getMatchingTrainees(availability, topicsOfInterest) {
 
   return matchingTrainees;
 }
+});
 
 // Sample trainees data
 const trainees = [
