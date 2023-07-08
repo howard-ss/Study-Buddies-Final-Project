@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment-timezone";
 import sendNotification from "../sendNotification";
 import "./AvailabilityForm.css"; // Import the CSS file
+import mainImage from "../public/study.jpg";
 
 const AvailabilityForm = () => {
   const [topic, setTopic] = useState("");
@@ -51,6 +52,7 @@ const AvailabilityForm = () => {
 
   const handleAvailabilitySubmit = async (e) => {
     e.preventDefault();
+console.log(topic, timeSlot);
 
     try {
       const availabilityData = {
@@ -139,6 +141,9 @@ const AvailabilityForm = () => {
         />
         <button type="submit">Submit</button>
       </form>
+      <div> 
+        <img src={mainImage}></img>
+      </div>
 
       {notification && <p>{notification}</p>}
 

@@ -20,7 +20,7 @@ const handleLogin = async (e) => {
 
 		if (response.data.user) {
 			// Successful login, navigate to the desired page
-			navigate("/AvailabilityForm");
+			navigate("/dashboard");
 		} else {
 			// Handle unsuccessful login, show an error message
 			alert("Invalid email or password.");
