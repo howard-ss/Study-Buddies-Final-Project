@@ -17,7 +17,7 @@ const App = () => {
 			<Header hasAccount={hasAccount} />
 			<Routes>
 				<Route path="/dashboard" element={<AvailabilityForm  />} />
-				{/* <Route path="/" element={<MatchingTrainees />} /> */}
+				 {/* <Route path="/" element={<MatchingTrainees />} />  */}
 				<Route path="/about" element={<About />} />
 				<Route
 					path="/login"

@@ -44,8 +44,8 @@ const handleLogin = async (e) => {
         <img src={loginImage} alt="Study" />
       </div>
       <main>
+      <h1>Study Buddies Page</h1>
         <section>
-        <h1>Study Buddies Page</h1>
           <h2 className="login-title">Login</h2>
           <form className="login-form" onSubmit={handleLogin}>
             <label htmlFor="login-email" className="login-label">

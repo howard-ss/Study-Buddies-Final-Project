@@ -6,6 +6,8 @@ import moment from "moment-timezone";
 import sendNotification from "../sendNotification";
 import "./AvailabilityForm.css"; // Import the CSS file
 import mainImage from "../public/study.jpg";
+import { useNavigate } from "react-router-dom"; // Import navigate
+
 
 const AvailabilityForm = () => {
   const [topic, setTopic] = useState("");
@@ -17,6 +19,7 @@ const AvailabilityForm = () => {
   const [userTimeZone, setUserTimeZone] = useState("");
   const [notification, setNotification] = useState("");
   const [matchedTrainees, setMatchedTrainees] = useState([]);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const detectUserTimeZone = () => {
@@ -52,8 +55,12 @@ const AvailabilityForm = () => {
 
   const handleAvailabilitySubmit = async (e) => {
     e.preventDefault();
+    if (!timeSlot) {
+      console.error("Invalid time slot");
+      return;
+    }
 console.log(topic, timeSlot);
-
+return;
     try {
       const availabilityData = {
         user_id: userId,
@@ -71,6 +78,8 @@ console.log(topic, timeSlot);
       setTimeSlot("");
       setSelectedDate(null);
       setSelectedTime(null);
+      // Redirect to the dashboard
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error submitting availability:", error);
     }

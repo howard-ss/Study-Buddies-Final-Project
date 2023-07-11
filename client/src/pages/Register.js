@@ -11,7 +11,7 @@ function RegisterPage() {
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState("");
-const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const handleNameChange = (e) => {
 		setName(e.target.value);
 	};
@@ -53,6 +53,7 @@ const [loading, setLoading] = useState(false);
 
 	return (
 		<div className="container">
+			<h1>Study Buddies Page</h1>
 			<h2>Register</h2>
 			<form onSubmit={handleSubmit}>
 				<div className="form-group">
@@ -99,7 +100,7 @@ const [loading, setLoading] = useState(false);
 						required
 					/>
 				</div>
-				<button className="btn" type="submit">
+				<button className="btn" type="submit" disabled={loading}>
 					Register
 				</button>
 				{loading? (<p>Loading ...</p>): null}
