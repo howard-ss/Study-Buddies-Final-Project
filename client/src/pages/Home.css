@@ -1,11 +1,47 @@
-.logo {
-	width: 100px;
-}
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  }
+  
+  .header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 10px;
+  }
+  
+  .heading {
+	font-size: 34px;
+  }
+  
+  .content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 30px;
+  }
+  
+  .left {
+	margin-right: 20px;
+  }
+  
+  .cyf-image {
+	width: 400px;
+	height: auto;
+	object-fit: cover;
+	  }
+	  
 
-.message {
+  
+  .right {
+	margin-left: 10px;
+  }
+  
+  .right a {
+	text-decoration: none;
 	color: blue;
-}
-
-.message:hover {
-	background-color: yellow;
-}
+	font-weight: bold;
+  }
+  

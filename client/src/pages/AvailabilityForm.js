@@ -7,7 +7,7 @@ import sendNotification from "../sendNotification";
 import "./AvailabilityForm.css"; // Import the CSS file
 import mainImage from "../public/study.jpg";
 import { useNavigate } from "react-router-dom"; // Import navigate
-
+import Header from "../components/Header";
 
 const AvailabilityForm = () => {
   const [topic, setTopic] = useState("");
@@ -113,6 +113,7 @@ return;
 
   return (      
     <div className="availability-form">
+      	<Header />
       <div className="image-container">
         <img src={mainImage} alt="Study" />
       </div>
@@ -142,16 +143,16 @@ return;
           <option value="time">Select Time Slot</option>
           {generateTimeSlots()}
         </select>
-        <DatePicker
-          selected={selectedTime}
-          onChange={(time) => setSelectedTime(time)}
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={15}
-          timeCaption="Time"
-          dateFormat="h:mm aa"
-          placeholderText="Select Time"
-        />
+        {/* <DatePicker
+          // selected={selectedTime}
+          // onChange={(time) => setSelectedTime(time)}
+          // showTimeSelect
+          // showTimeSelectOnly
+          // timeIntervals={15}
+          // timeCaption="Time"
+          // dateFormat="h:mm aa"
+          // placeholderText="Select Time"
+        /> */}
         <button type="submit">Submit</button>
       </form>
       {notification && <p>{notification}</p>}
