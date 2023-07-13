@@ -59,8 +59,8 @@ const AvailabilityForm = () => {
       console.error("Invalid time slot");
       return;
     }
-console.log(topic, timeSlot);
-return;
+// console.log(topic, timeSlot);
+// return;
     try {
       const availabilityData = {
         user_id: userId,
