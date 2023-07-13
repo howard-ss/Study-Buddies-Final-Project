@@ -8,51 +8,44 @@ import "./AvailabilityForm.css"; // Import the CSS file
 import mainImage from "../public/study.jpg";
 import { useNavigate } from "react-router-dom"; // Import navigate
 import Header from "../components/Header";
-
 const AvailabilityForm = () => {
   const [topic, setTopic] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
   const [matchEvent, setMatchEvent] = useState([]);
-  const [userId, setUserId] = useState(localStorage.getItem("user"));
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail"));
+  const [userName, setUserName] = useState(localStorage.getItem("userFirstName"));
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [userTimeZone, setUserTimeZone] = useState("");
   const [notification, setNotification] = useState("");
   const [matchedTrainees, setMatchedTrainees] = useState([]);
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
   useEffect(() => {
     const detectUserTimeZone = () => {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       setUserTimeZone(timeZone);
     };
-
     detectUserTimeZone();
   }, []);
-
   const generateTimeSlots = () => {
     const timeSlots = [];
     let hour = 10;
     let minute = 0;
-
     while (hour <= 18) {
       const formattedHour = hour.toString().padStart(2, "0");
       const formattedMinute = minute.toString().padStart(2, "0");
       const time = `${formattedHour}:${formattedMinute}`;
       const label = `${formattedHour}:${formattedMinute} - ${hour + 2}:${formattedMinute}`;
-
       timeSlots.push(
         <option key={time} value={time}>
           {label}
         </option>
       );
-
       hour += 2;
     }
-
     return timeSlots;
   };
-
   const handleAvailabilitySubmit = async (e) => {
     e.preventDefault();
     if (!timeSlot) {
@@ -68,22 +61,20 @@ const AvailabilityForm = () => {
         selected_time: timeSlot,
         topic,
       };
-
-      const response = await axios.post("http://localhost:3000/api/avail", availabilityData);
+      const response = await axios.post("/api/avail", availabilityData);
       setMatchEvent(response.data.eventData);
-
+      console.log(response.data);
       setTopic("");
       setTimeSlot("");
       setSelectedDate(null);
       setSelectedTime(null);
       // Redirect to the dashboard
-      navigate("/dashboard");
+      // navigate("/dashboard");
     } catch (error) {
       console.error("Error submitting availability:", error);
     }
   };
-
-  const fetchMatchingTrainees = async (selectedDate, timeSlot, user_id) => {
+  const fetchMatchingTrainees = async (selectedDate, timeSlot, userId) => {
     try {
       const response = await axios.get("/api/avail", {
         params: {
@@ -95,10 +86,9 @@ const AvailabilityForm = () => {
           topic,
         },
       });
-
       const data = response.data;
+      console.log(data)
       setMatchedTrainees(data.matchingTrainees);
-
       if (data.matchingTrainees.length > 0) {
         setNotification("Match found!");
       } else {
@@ -108,10 +98,9 @@ const AvailabilityForm = () => {
       console.error("Error fetching matched trainees:", error);
     }
   };
-
-  return (      
+  return (
     <div className="availability-form">
-      	<Header />
+        <Header />
       <div className="image-container">
         <img src={mainImage} alt="Study" />
       </div>
@@ -123,7 +112,6 @@ const AvailabilityForm = () => {
           onChange={(date) => setSelectedDate(date)}
           placeholderText="Select Date"
         />
-        
         <h2>Select Programming Topic</h2>
         <select value={topic} onChange={(e) => setTopic(e.target.value)}>
           <option value="">Select Topic</option>
@@ -135,7 +123,6 @@ const AvailabilityForm = () => {
           <option value="PHP">PHP</option>
           {/* Add more options for other programming topics */}
         </select>
-
         <h2>Select Time Slot</h2>
         <select value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)}>
           <option value="time">Select Time Slot</option>
@@ -144,17 +131,28 @@ const AvailabilityForm = () => {
         <button type="submit">Submit</button>
       </form>
       {notification && <p>{notification}</p>}
-      {matchEvent?.length > 0 && (
+      {matchEvent?.length > 1 ? (
         <div className="matched-trainees-container">
           <h2>Matched Trainees:</h2>
-          <h3>We found {matchEvent?.length} trainees who selected this time and topic.</h3>
+          <h3>We found {matchEvent?.length} trainees who selected this time and topic.Please check your <a href="/dashboard">Dashboard</a></h3>
         </div>
-      )}
+      ):
+      <div className="matched-trainees-container">
+          <h2>Matched Trainees:</h2>
+          <h3>We could not find any trainees. Please check your <a href="/dashboard">Dashboard</a></h3>
+        </div>
+      }
       </div>
     </div>
   );
 };
-
 export default AvailabilityForm;
+
+
+
+
+
+
+
 
 
