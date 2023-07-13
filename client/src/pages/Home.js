@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AvailabilityForm from "./AvailabilityForm";
-
 import "./Home.css";
-import logo from "./logo.svg";
+import logoImage from "../public/cyf-image.jpg";
+
 
 export function Home() {
 	const [message, setMessage] = useState("Loading...");
@@ -17,7 +17,7 @@ export function Home() {
 				return res.json();
 			})
 			.then((body) => {
-				setMessage(body.message);
+				setMessage("Study Buddies");
 			})
 			.catch((err) => {
 				console.error(err);
@@ -26,20 +26,23 @@ export function Home() {
 
 	return (
 		<main role="main">
-			<div>
-				<img
-					className="logo"
-					data-qa="logo"
-					src={logo}
-					alt="Just the React logo"
-				/>
-				<h1 className="message" data-qa="message">
-					{message}
-				</h1>
-				<Link to="/about/this/site">About</Link>
-			</div>
-		</main>
-	);
+      		<div className="container">
+			  <div className="header">
+        	   <h1 className="heading">Study Buddies</h1>
+               <Link to="/login">Login</Link>
+         	 </div>
+        	<div className="content">
+         	 <div className="left">
+           	 <img
+              className="cyf-image"
+              src={logoImage}
+              alt="Code Your Future study session"
+            />
+          </div>
+        </div>
+	  </div>
+	</main>
+   );
 }
 
 export default Home;
