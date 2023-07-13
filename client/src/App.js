@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About";
 import Register from "./pages/Register";
@@ -8,16 +7,18 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import AvailabilityForm from "./pages/AvailabilityForm";
 import MatchingTrainees from "./MatchingTrainees";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   const [hasAccount, setHasAccount] = useState(false);
 
   return (
 		<div>
-			<Header hasAccount={hasAccount} />
+		
 			<Routes>
-				<Route path="/dashboard" element={<AvailabilityForm  />} />
-				 {/* <Route path="/" element={<MatchingTrainees />} />  */}
+      <Route path="/" element={<Home  />} />
+				<Route path="/booking" element={<AvailabilityForm  />} />
+				  <Route path="/dashboard" element={<Dashboard />} />  
 				<Route path="/about" element={<About />} />
 				<Route
 					path="/login"

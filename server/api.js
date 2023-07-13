@@ -52,51 +52,101 @@ router.post("/login", async (req, res) => {
 
 
 // Route for user availability
+// router.post("/avail", async (req, res) => {
+// 	try {
+// 		const { user_id, selected_date, selected_time, topic } = req.body;
+// 		await db.query(
+// 			"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
+// 			[user_id, selected_date, selected_time, topic]
+// 		);
+
+// 		const matchingTrainees = await getMatchingTrainees(
+// 			user_id,
+// 			selected_date,
+// 			selected_time,
+// 			topic
+// 		);
+
+// 		if (matchingTrainees.length > 3) {
+// 			res.status(201).json({
+// 				message: "Match found!",
+// 				eventData: matchingTrainees,
+// 			});
+// 		} else {
+// 			res.status(200).json({ message: "No match found." });
+// 		}
+// 	} catch (error) {
+// 		logger.error("Error submitting availability:", error);
+// 		res.status(500).json({ error: "Internal server error" });
+// 	}
+// });
+
+// async function getMatchingTrainees(
+// 	user_id,
+// 	selected_date,
+// 	selected_time,
+// 	topic
+// ) {
+// 	const selectQuery =
+// 		"SELECT * FROM availability WHERE user_id = $1 AND selected_date = $2 AND selected_time = $3 AND topic = $4";
+// 	const result = await db.query(selectQuery, [
+// 		user_id,
+// 		selected_date,
+// 		selected_time,
+// 		topic,
+// 	]);
+// 	const matchingTrainees = result.rows;
+// 	return matchingTrainees;
+// }
+
 router.post("/avail", async (req, res) => {
 	try {
-		const { user_id, selected_date, selected_time, topic } = req.body;
-		await db.query(
-			"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
-			[user_id, selected_date, selected_time, topic]
-		);
-
-		const matchingTrainees = await getMatchingTrainees(
-			user_id,
-			selected_date,
-			selected_time,
-			topic
-		);
-
-		if (matchingTrainees.length > 3) {
-			res.status(201).json({
-				message: "Match found!",
-				eventData: matchingTrainees,
-			});
-		} else {
-			res.status(200).json({ message: "No match found." });
-		}
+	  const { user_id, selected_date, selected_time, topic } = req.body;
+	  await db.query(
+		"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
+		[user_id, selected_date, selected_time, topic]
+	  );
+  
+	  const matchingTrainees = await getMatchingTrainees(
+		user_id,
+		selected_date,
+		selected_time,
+		topic
+	  );
+  
+	  if (matchingTrainees.length > 0) {
+		res.status(201).json({
+		  message: "Match found!",
+		  eventData: matchingTrainees,
+		});
+	  } else {
+		res.status(200).json({ message: "No match found." });
+	  }
 	} catch (error) {
-		logger.error("Error submitting availability:", error);
-		res.status(500).json({ error: "Internal server error" });
+	  console.error("Error submitting availability:", error);
+	  res.status(500).json({ error: "Internal server error" });
 	}
-});
-
-async function getMatchingTrainees(
+  });
+  
+  async function getMatchingTrainees(
 	user_id,
 	selected_date,
 	selected_time,
 	topic
-) {
+  ) {
 	const selectQuery =
-		"SELECT * FROM availability WHERE user_id = $1 AND selected_date = $2 AND selected_time = $3 AND topic = $4";
+	  "SELECT * FROM availability WHERE user_id = $1 AND selected_date = $2 AND selected_time = $3 AND topic = $4";
 	const result = await db.query(selectQuery, [
-		user_id,
-		selected_date,
-		selected_time,
-		topic,
+	  user_id,
+	  selected_date,
+	  selected_time,
+	  topic,
 	]);
 	const matchingTrainees = result.rows;
 	return matchingTrainees;
-}
+  }
+  
+
+  
 
 export default router;
