@@ -19,7 +19,10 @@ const handleLogin = async (e) => {
 		});
 		console.log(response.data);
 
-		if (response.data.user) {
+		if (response.data.id) {
+      localStorage.setItem("userId", response.data.id);
+      localStorage.setItem("userEmail", response.data.email);
+      localStorage.setItem("userName", response.data.name);
 			// Successful login, navigate to the desired page
 			navigate("/booking");
 		} else {
@@ -27,7 +30,10 @@ const handleLogin = async (e) => {
 			alert("Invalid email or password.");
 		}
 	} catch (error) {
+
 		// Handle any errors that occurred during the login request
+
+    
 		console.log("Error occurred during login:", error);
 		alert("An error occurred during login.");
 	}
