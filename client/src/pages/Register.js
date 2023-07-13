@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Register.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";    
 
 function RegisterPage() {
 	const [name, setName] = useState("");
@@ -39,9 +39,7 @@ function RegisterPage() {
 			});
 			setUser(response.data)
 			console.log(response.data);
-			if(user){
-				navigate("/login");
-			}
+			
 			setLoading(false);
 			// alert("Registration successful!"); // Display success message
 			// navigate("/login"); // Redirect to login page after successful registration
@@ -50,7 +48,11 @@ function RegisterPage() {
 			alert("An error occurred during registration."); // Display error message
 		}
 	};
-
+useEffect(() =>{
+	if(user){
+		 	navigate("/login");
+		}
+}, [user]);
 	return (
 		<div className="container">
 			<h1>Study Buddies Page</h1>
