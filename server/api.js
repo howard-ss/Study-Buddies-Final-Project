@@ -32,23 +32,49 @@ router.post("/register", async (req, res) => {
 });
 
 // Route for user login
+// router.post("/login", async (req, res) => {
+// 	try {
+// 		const { email, password } = req.body;
+// 		const selectQuery =
+// 			"SELECT * FROM users WHERE email = $1 AND password = $2";
+// 		const result = await db.query(selectQuery, [email, password]);
+// 		const user = result.rows[0];
+// 		if (user) {
+// 			res.status(200).json({ user }); // Send the user data in the response
+// 		} else {
+// 			res.status(401).json("Invalid email or password");
+// 		}
+// 	} catch (error) {
+// 		logger.error("Error logging in:", error);
+// 		res.status(500).json({ error: "Internal server error" });
+// 	}
+// });
+
 router.post("/login", async (req, res) => {
 	try {
-		const { email, password } = req.body;
-		const selectQuery =
-			"SELECT * FROM users WHERE email = $1 AND password = $2";
-		const result = await db.query(selectQuery, [email, password]);
-		const user = result.rows[0];
-		if (user) {
-			res.status(200).json({ user }); // Send the user data in the response
+	  const { email, password } = req.body;
+	  const selectQuery = "SELECT * FROM users WHERE email = $1";
+	  const result = await db.query(selectQuery, [email]);
+	  const user = result.rows[0];
+  
+	  if (user) {
+		// Compare the provided password with the hashed password stored in the database
+		const isPasswordValid = await bcrypt.compare(password, user.password);
+  
+		if (isPasswordValid) {
+		  res.status(200).json({ user });
 		} else {
-			res.status(401).json("Invalid email or password");
+		  res.status(401).json("Invalid email or password");
 		}
+	  } else {
+		res.status(401).json("Invalid email or password");
+	  }
 	} catch (error) {
-		logger.error("Error logging in:", error);
-		res.status(500).json({ error: "Internal server error" });
+	  console.error("Error logging in:", error);
+	  res.status(500).json({ error: "Internal server error" });
 	}
-});
+  });
+  
 
 
 // Route for user availability
