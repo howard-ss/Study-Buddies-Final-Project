@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
 
 
 
-
+//Route for availability
 router.post("/avail", async (req, res) => {
 	try {
 	  const { user_id, selected_date, selected_time, topic } = req.body;
@@ -98,7 +98,19 @@ router.post("/avail", async (req, res) => {
 	return matchingTrainees;
   }
   
-
+  // Route for booking slot
+  router.post("/booking", async (req, res) => {
+    const {userId} = req.body;
+    console.log(userId)
+    const selectQuery = "SELECT * FROM availability WHERE user_id = $1";
+    const result = await db.query(selectQuery, [userId]);
+    const userBooking = result.rows;
+    console.log(userBooking);
+    res.status(200).json({
+        message: "Booking found!",
+        eventData: userBooking,
+    })
+  })
   
 
 export default router;
