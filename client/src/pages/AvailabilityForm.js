@@ -8,6 +8,9 @@ import "./AvailabilityForm.css"; // Import the CSS file
 import mainImage from "../public/study.jpg";
 import { useNavigate } from "react-router-dom"; // Import navigate
 import Header from "../components/Header";
+
+
+
 const AvailabilityForm = () => {
   const [topic, setTopic] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
@@ -76,13 +79,13 @@ const AvailabilityForm = () => {
   };
   const fetchMatchingTrainees = async (selectedDate, timeSlot, userId) => {
     try {
-      const response = await axios.get("/api/avail", {
+      const response = await axios.get("/api/matching-trainees", {
         params: {
           user_id: userId,
           availability: selectedDate
             ? moment(selectedDate).format("YYYY-MM-DD")
             : moment().format("YYYY-MM-DD"),
-          time: timeSlot,
+          selected_time: timeSlot,
           topic,
         },
       });
@@ -131,7 +134,7 @@ const AvailabilityForm = () => {
         <button type="submit">Submit</button>
       </form>
       {notification && <p>{notification}</p>}
-      {matchEvent?.length > 1 ? (
+      {matchEvent?.length > 0 ? (
         <div className="matched-trainees-container">
           <h2>Matched Trainees:</h2>
           <h3>We found {matchEvent?.length} trainees who selected this time and topic.Please check your <a href="/dashboard">Dashboard</a></h3>
@@ -147,12 +150,3 @@ const AvailabilityForm = () => {
   );
 };
 export default AvailabilityForm;
-
-
-
-
-
-
-
-
-
