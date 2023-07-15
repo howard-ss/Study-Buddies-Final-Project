@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import axios from "axios";
+import loginImage from "../public/cyf.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -18,15 +19,21 @@ const handleLogin = async (e) => {
 		});
 		console.log(response.data);
 
-		if (response.data.user) {
+		if (response.data.id) {
+      localStorage.setItem("userId", response.data.id);
+      localStorage.setItem("userEmail", response.data.email);
+      localStorage.setItem("userName", response.data.name);
 			// Successful login, navigate to the desired page
-			navigate("/dashboard");
+			navigate("/booking");
 		} else {
 			// Handle unsuccessful login, show an error message
 			alert("Invalid email or password.");
 		}
 	} catch (error) {
+
 		// Handle any errors that occurred during the login request
+
+    
 		console.log("Error occurred during login:", error);
 		alert("An error occurred during login.");
 	}
@@ -39,8 +46,11 @@ const handleLogin = async (e) => {
 
   return (
     <div className="login-container">
-      <h1>Study Buddies Page</h1>
+      <div className="image-container">
+        <img src={loginImage} alt="Study" />
+      </div>
       <main>
+      <h1>Study Buddies Page</h1>
         <section>
           <h2 className="login-title">Login</h2>
           <form className="login-form" onSubmit={handleLogin}>

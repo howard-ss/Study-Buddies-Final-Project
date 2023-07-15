@@ -3,6 +3,7 @@ import { Router } from "express";
 import logger from "./utils/logger";
 import db from "./db";
 
+const bcrypt = require('bcrypt');
 const router = Router();
 
 // Root route for welcoming everyone
@@ -40,7 +41,7 @@ router.post("/login", async (req, res) => {
 		const result = await db.query(selectQuery, [email, password]);
 		const user = result.rows[0];
 		if (user) {
-			res.status(200).json({ user }); // Send the user data in the response
+			res.status(200).json({ email: user.email, id: user.id, name: user.name }); // Send the user data in the response
 		} else {
 			res.status(401).json("Invalid email or password");
 		}
@@ -51,52 +52,65 @@ router.post("/login", async (req, res) => {
 });
 
 
-// Route for user availability
+
+//Route for availability
 router.post("/avail", async (req, res) => {
 	try {
-		const { user_id, selected_date, selected_time, topic } = req.body;
-		await db.query(
-			"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
-			[user_id, selected_date, selected_time, topic]
-		);
-
-		const matchingTrainees = await getMatchingTrainees(
-			user_id,
-			selected_date,
-			selected_time,
-			topic
-		);
-
-		if (matchingTrainees.length > 3) {
-			res.status(201).json({
-				message: "Match found!",
-				eventData: matchingTrainees,
-			});
-		} else {
-			res.status(200).json({ message: "No match found." });
-		}
+	  const { user_id, selected_date, selected_time, topic } = req.body;
+	  await db.query(
+		"INSERT INTO availability (user_id, selected_date, selected_time, topic) VALUES ($1, $2, $3, $4)",
+		[user_id, selected_date, selected_time, topic]
+	  );
+  
+	  const matchingTrainees = await getMatchingTrainees(
+		selected_date,
+		selected_time,
+		topic
+	  );
+  
+	  if (matchingTrainees.length > 0) {
+		res.status(201).json({
+		  message: "Match found!",
+		  eventData: matchingTrainees,
+		});
+	  } else {
+		res.status(200).json({ message: "No match found." });
+	  }
 	} catch (error) {
-		logger.error("Error submitting availability:", error);
-		res.status(500).json({ error: "Internal server error" });
+	  console.error("Error submitting availability:", error);
+	  res.status(500).json({ error: "Internal server error" });
 	}
-});
-
-async function getMatchingTrainees(
-	user_id,
+  });
+  
+  async function getMatchingTrainees(
 	selected_date,
 	selected_time,
 	topic
-) {
+  ) {
 	const selectQuery =
-		"SELECT * FROM availability WHERE user_id = $1 AND selected_date = $2 AND selected_time = $3 AND topic = $4";
+	  "SELECT * FROM availability WHERE  selected_date = $1 AND selected_time = $2 AND topic = $3";
 	const result = await db.query(selectQuery, [
-		user_id,
-		selected_date,
-		selected_time,
-		topic,
+	  selected_date,
+	  selected_time,
+	  topic,
 	]);
 	const matchingTrainees = result.rows;
 	return matchingTrainees;
-}
+  }
+  
+  // Route for booking slot
+  router.post("/booking", async (req, res) => {
+    const {userId} = req.body;
+    console.log(userId)
+    const selectQuery = "SELECT * FROM availability WHERE user_id = $1";
+    const result = await db.query(selectQuery, [userId]);
+    const userBooking = result.rows;
+    console.log(userBooking);
+    res.status(200).json({
+        message: "Booking found!",
+        eventData: userBooking,
+    })
+  })
+  
 
 export default router;

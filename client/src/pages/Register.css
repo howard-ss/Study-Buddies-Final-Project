@@ -1,11 +1,15 @@
-.container {
+ .container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
   }
-  
+  h1 {
+    text-align: center;
+  }
   h2 {
     text-align: center;
   }
@@ -21,8 +25,7 @@
   
   input[type="text"],
   input[type="email"],
-  input[type="password"],
-  input[type="tel"] {
+  input[type="password"] {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -36,12 +39,13 @@
     margin-top: 15px;
     background-color: #4caf50;
     color: white;
-    border: none;
-    border-radius: 4px;
     cursor: pointer;
   }
   
   button.btn:hover {
     background-color: #45a049;
   }
-  
+  .container > form:last-child {
+    margin-bottom: 0;
+  }
+   

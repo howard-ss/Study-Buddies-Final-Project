@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Register.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";    
 
 function RegisterPage() {
 	const [name, setName] = useState("");
@@ -11,7 +11,7 @@ function RegisterPage() {
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState("");
-const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const handleNameChange = (e) => {
 		setName(e.target.value);
 	};
@@ -39,9 +39,7 @@ const [loading, setLoading] = useState(false);
 			});
 			setUser(response.data)
 			console.log(response.data);
-			if(user){
-				navigate("/login");
-			}
+			
 			setLoading(false);
 			// alert("Registration successful!"); // Display success message
 			// navigate("/login"); // Redirect to login page after successful registration
@@ -50,9 +48,14 @@ const [loading, setLoading] = useState(false);
 			alert("An error occurred during registration."); // Display error message
 		}
 	};
-
+useEffect(() =>{
+	if(user){
+		 	navigate("/login");
+		}
+}, [user]);
 	return (
 		<div className="container">
+			<h1>Study Buddies Page</h1>
 			<h2>Register</h2>
 			<form onSubmit={handleSubmit}>
 				<div className="form-group">
@@ -99,7 +102,7 @@ const [loading, setLoading] = useState(false);
 						required
 					/>
 				</div>
-				<button className="btn" type="submit">
+				<button className="btn" type="submit" disabled={loading}>
 					Register
 				</button>
 				{loading? (<p>Loading ...</p>): null}
