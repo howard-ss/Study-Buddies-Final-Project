@@ -10,8 +10,11 @@
 }
 
 .image-container img {
-  width: 100%;
-  height: auto;
+  width: 50%;
+  height:auto;
+  border-radius: 50%;
+  border: 1px solid black;
+  margin-right: 30% ;
 }
 
 .login-form {
