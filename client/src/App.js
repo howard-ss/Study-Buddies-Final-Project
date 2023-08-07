@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import AvailabilityForm from "./pages/AvailabilityForm";
 import MatchingTrainees from "./MatchingTrainees";
 import Dashboard from "./pages/Dashboard";
+import SupportChat from "./components"
 
 const App = () => {
   const [hasAccount, setHasAccount] = useState(false);
