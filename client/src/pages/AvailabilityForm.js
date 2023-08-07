@@ -8,6 +8,8 @@ import "./AvailabilityForm.css";
 import mainImage from "../public/study.jpg";
 import { useNavigate } from "react-router-dom"; // Import navigate
 import Header from "../components/Header";
+// import SupportChat from "../components/SupportChat";
+
 const AvailabilityForm = () => {
 	const [topic, setTopic] = useState("");
 	const [timeSlot, setTimeSlot] = useState("");
@@ -23,6 +25,12 @@ const AvailabilityForm = () => {
 	const [notification, setNotification] = useState("");
 	const [matchedTrainees, setMatchedTrainees] = useState([]);
 	const navigate = useNavigate();
+
+    // const [isOpenGPT, setIsOpenGPT] = useState(false);
+	// const openGPT = () => {
+	// 	setIsOpenGPT(true)
+	// }
+
 	useEffect(() => {
 		const detectUserTimeZone = () => {
 			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -104,6 +112,10 @@ const AvailabilityForm = () => {
 	};
 	return (
 		<div className="availability-form">
+			{/* <div isOpenGPT>
+			  <SupportChat/>
+			</div>
+			<div onClick={openGPT}>Chat With me for Anything Else</div> */}
 			<Header />
 			<div className="image-container">
 				<img src={mainImage} alt="Study" />
@@ -156,6 +168,7 @@ const AvailabilityForm = () => {
 					</div>
 				)}
 			</div>
+
 		</div>
 	);
 };
