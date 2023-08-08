@@ -84,7 +84,7 @@ const SupportChat = () => {
 					))}
 				</ul>
 				<nav>
-					<p>Made by Howard</p>
+					<p>Ask Anything --- </p>
 				</nav>
 			</section>
 			<section className="main">
