@@ -26,3 +26,7 @@ nav ul li a {
 nav ul li a.active {
   font-weight: bold;
 }
+
+button {
+  color: black;
+}
