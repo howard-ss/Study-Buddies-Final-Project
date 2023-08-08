@@ -106,7 +106,7 @@ const SupportChat = () => {
 					</div>
 					<p className="info">
 						Our goal is to make AI systems more natural and safe to interact
-						with. Your feedback will help me improve.
+						with. Your feedback will help us improve.
 					</p>
 				</div>
 			</section>
