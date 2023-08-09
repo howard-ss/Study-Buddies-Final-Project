@@ -6,6 +6,19 @@ import db from "./db";
 const bcrypt = require('bcrypt');
 const router = Router();
 
+const express = require ('express');
+// const cors = require('cors');
+const bodyParser = require('body-parser');
+const { v4: uuidv4 } = require('uuid');
+const app = express();
+app.use(express.json());
+// app.use(cors());
+const PORT = 8000;
+
+// Do NOT deploy this API key or upload onto GitHub
+const API_KEY = ""      // need GPT-4 API key token
+
+
 // Root route for welcoming everyone
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
@@ -51,7 +64,34 @@ router.post("/login", async (req, res) => {
 	}
 });
 
+// Route for GPT
+app.post("/completions", async (req, res) => {
+	const options = {
+		method: "POST",
+		headers: {
+			Authorization: `Bearer ${API_KEY}`,
+			"Content-Type": "application/json",
+			// "Content-Type": "application/x-www-form-urlencoded",
+		},
+		body: JSON.stringify({
+			model: "gpt-3.5-turbo",
+			messages: [{ role: "user", content: req.body.message }],
+			max_tokens: 100,
+		}),
+	};
 
+	try {
+		const response = await fetch(
+			"https://api.openai.com/v1/chat/completions",
+			options
+		);
+		const data = await response.json();
+		res.send(data);
+	} catch (error) {
+		console.error(error);
+	}
+});
+app.listen(PORT, () => console.log('server is running on PORT ' + PORT));
 
 //Route for availability
 router.post("/avail", async (req, res) => {
