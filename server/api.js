@@ -16,7 +16,7 @@ app.use(express.json());
 const PORT = 8000;
 
 // Do NOT deploy this API key or upload onto GitHub
-const API_KEY = ""      // need GPT-4 API key token
+const API_KEY = "";      // need GPT-4 API key token
 
 
 // Root route for welcoming everyone
@@ -77,6 +77,7 @@ app.post("/completions", async (req, res) => {
 			model: "gpt-3.5-turbo",
 			messages: [{ role: "user", content: req.body.message }],
 			max_tokens: 100,
+			// conversation_id: uuidv4()
 		}),
 	};
 
@@ -85,8 +86,11 @@ app.post("/completions", async (req, res) => {
 			"https://api.openai.com/v1/chat/completions",
 			options
 		);
-		const data = await response.json();
-		res.send(data);
+		const data = await response.json()
+    // Extract generated text
+	// const chatText = data.choices[0].message.content
+	// 	res.send({text: chatText});
+	res.send(data)
 	} catch (error) {
 		console.error(error);
 	}
