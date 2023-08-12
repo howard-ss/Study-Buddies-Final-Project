@@ -13,7 +13,7 @@ const { v4: uuidv4 } = require('uuid');
 const app = express();
 app.use(express.json());
 // app.use(cors());
-const PORT = 8000;
+// const PORT = 8000;
 
 // Do NOT deploy this API key or upload onto GitHub
 const API_KEY = "";      // need GPT-4 API key token
@@ -95,7 +95,7 @@ app.post("/completions", async (req, res) => {
 		console.error(error);
 	}
 });
-app.listen(PORT, () => console.log('server is running on PORT ' + PORT));
+// app.listen(PORT, () => console.log('server is running on PORT ' + PORT));
 
 //Route for availability
 router.post("/avail", async (req, res) => {

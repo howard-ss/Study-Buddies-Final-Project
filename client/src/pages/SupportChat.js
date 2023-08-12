@@ -7,6 +7,23 @@ const SupportChat = () => {
 	const [previousChats, setPreviousChats] = useState([]);
 	const [currentTitle, setCurrentTitle] = useState(null);
 
+	// Hardcoded test messages
+	// const testMessages = [
+	// 	{
+	// 		question: "What is your name?",
+	// 		answer: "My name is CodeYourFuture.",
+	// 	},
+	// 	{
+	// 		question: "What can you do?",
+	// 		answer: "I can have conversations and try to be helpful!",
+	// 	},
+	// 	{
+	// 		question: "How are you feeling today?",
+	// 		answer:
+	// 			"I'm an AI so I don't have real feelings, but my training is going well!",
+	// 	},
+	// ];
+
 	const createNewChat = () => {
 		setMessage(null);
 		setValue("");
@@ -17,8 +34,8 @@ const SupportChat = () => {
 		setCurrentTitle(uniqueTitle);
 		setMessage(null);
 		setValue("");
-	};
-
+	};	
+	
 	const getMessages = async () => {
 		const options = {
 			method: "POST",
@@ -32,7 +49,7 @@ const SupportChat = () => {
 
 		try {
 			const response = await fetch(
-				"http://localhost:8000/completions",
+				"http://localhost:3100/completions",
 				options
 			);
 			const data = await response.json();
