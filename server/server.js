@@ -71,7 +71,7 @@
 // 	console.log(`Server is running on port ${config.port}`);
 // });
 
-import http from "node:http";
+import http from "http";
 
 import app from "./app";
 import { connectDb, disconnectDb } from "./db";
