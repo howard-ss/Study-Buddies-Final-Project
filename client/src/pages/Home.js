@@ -30,7 +30,7 @@ export function Home() {
 			  <div className="header">
         	   <h1 className="heading">Study Buddies</h1>
                <Link to="/login">Login</Link>&nbsp;
-			   <Link to="/WeatherApp">Check Weather</Link>
+			   <Link to="/WeatherApp">Weather</Link>
          	 </div>
         	<div className="content">
          	 <div className="left">
