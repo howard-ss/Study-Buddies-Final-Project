@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import AvailabilityForm from "./pages/AvailabilityForm";
 import MatchingTrainees from "./MatchingTrainees";
 import Dashboard from "./pages/Dashboard";
+import SupportChat from "./pages/SupportChat";
 // import SupportChat from "./components/SupportChat";
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
 					element={<Login setHasAccount={setHasAccount} />} />
 				<Route path="/register"
 					element={<Register setHasAccount={setHasAccount} />} />
+				<Route path="/completions" element={<SupportChat/>}/>
 			</Routes>
 			<Footer />
 		</div>

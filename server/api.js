@@ -16,7 +16,7 @@ app.use(express.json());
 // const PORT = 8000;
 
 // Do NOT deploy this API key or upload onto GitHub
-const API_KEY = "";      // need GPT-4 API key token
+const API_KEY = "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";      // need GPT-4 API key token
 
 
 // Root route for welcoming everyone
