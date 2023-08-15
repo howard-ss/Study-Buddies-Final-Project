@@ -33,7 +33,8 @@ const App = () => {
 					element={<Login setHasAccount={setHasAccount} />} />
 				<Route path="/register"
 					element={<Register setHasAccount={setHasAccount} />} />
-				</Routes>
+				<Route path="/completions" element={<SupportChat/>}/>
+			</Routes>
 			<Footer />
 		</div>
 	);
