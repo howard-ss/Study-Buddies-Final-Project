@@ -29,7 +29,8 @@ export function Home() {
       		<div className="container">
 			  <div className="header">
         	   <h1 className="heading">Study Buddies</h1>
-               <Link to="/login">Login</Link>
+               <Link to="/login">Login</Link>&nbsp;
+			   <Link to="/WeatherApp">Check Weather</Link>
          	 </div>
         	<div className="content">
          	 <div className="left">
