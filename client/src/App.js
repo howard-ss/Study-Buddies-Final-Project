@@ -15,15 +15,11 @@ const App = () => {
   const [isOpenGPT, setIsOpenGPT] = useState(false);
 
   const openGPT = () => {
-	setIsOpenGPT(true)
+	setIsOpenGPT(false)
   }
 
   return (
 		<div>
-			<div isOpenGPT>
-				<SupportChat/>
-			</div>
-			<div onclick={openGPT}>Chat With Me for Anything Else</div>
 			<Routes>
       			<Route path="/" element={<Home  />} />
 				<Route path="/booking" element={<AvailabilityForm  />} />
@@ -33,7 +29,7 @@ const App = () => {
 					element={<Login setHasAccount={setHasAccount} />} />
 				<Route path="/register"
 					element={<Register setHasAccount={setHasAccount} />} />
-				<Route path="/completions" element={<SupportChat/>}/>
+				<Route path="/support-chat" element={<SupportChat/>}/>
 			</Routes>
 			<Footer />
 		</div>

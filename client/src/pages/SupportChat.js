@@ -49,7 +49,7 @@ const SupportChat = () => {
 
 		try {
 			const response = await fetch(
-				"http://localhost:3100/completions",
+				"http://localhost:3100/api/completions",
 				options
 			);
 			const data = await response.json();

@@ -31,7 +31,7 @@ const getMessages = async () => {
       }
 
       try {
-          const response = await fetch("http://localhost:8000/completions", options)
+          const response = await fetch("http://localhost:3100/api/completions", options)
           const data = await response.json()
           setMessage(data.choices[0].message)
       }catch(error){

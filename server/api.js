@@ -16,8 +16,7 @@ app.use(express.json());
 // const PORT = 8000;
 
 // Do NOT deploy this API key or upload onto GitHub
-const API_KEY = "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";      // need GPT-4 API key token
-
+const API_KEY = process.env.GPT_API_KEY;      // need GPT-4 API key token
 
 // Root route for welcoming everyone
 router.get("/", (_, res) => {
@@ -65,7 +64,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Route for GPT
-app.post('/completions', async(req, res)=>{
+router.post('/completions', async(req, res)=>{
     const options = {
          method: "POST",
          headers: {
@@ -89,22 +88,6 @@ app.post('/completions', async(req, res)=>{
         console.error(error)
     }
 } )
-
-
-	try {
-		const response = await fetch(
-			"https://api.openai.com/v1/chat/completions",
-			options
-		);
-		const data = await response.json()
-    // Extract generated text
-	// const chatText = data.choices[0].message.content
-	// 	res.send({text: chatText});
-	res.send(data)
-	} catch (error) {
-		console.error(error);
-	}
-});
 // app.listen(PORT, () => console.log('server is running on PORT ' + PORT));
 
 //Route for availability
