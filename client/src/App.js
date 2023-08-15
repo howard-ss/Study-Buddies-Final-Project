@@ -8,15 +8,24 @@ import Login from "./pages/Login";
 import AvailabilityForm from "./pages/AvailabilityForm";
 import MatchingTrainees from "./MatchingTrainees";
 import Dashboard from "./pages/Dashboard";
+import SupportChat from "./components/SupportChat";
 
 const App = () => {
   const [hasAccount, setHasAccount] = useState(false);
+  const [isOpenGPT, setIsOpenGPT] = useState(false);
+
+  const openGPT = () => {
+	setIsOpenGPT(true)
+  }
 
   return (
 		<div>
-		
+			<div isOpenGPT>
+				<SupportChat/>
+			</div>
+			<div onclick={openGPT}>Chat With Me for Anything Else</div>
 			<Routes>
-      <Route path="/" element={<Home  />} />
+      			<Route path="/" element={<Home  />} />
 				<Route path="/booking" element={<AvailabilityForm  />} />
 				<Route path="/dashboard" element={<Dashboard />} />  
 				<Route path="/about" element={<About />} />
@@ -24,7 +33,7 @@ const App = () => {
 					element={<Login setHasAccount={setHasAccount} />} />
 				<Route path="/register"
 					element={<Register setHasAccount={setHasAccount} />} />
-			</Routes>
+				</Routes>
 			<Footer />
 		</div>
 	);
