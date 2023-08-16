@@ -16,7 +16,7 @@ body {
 }
 
  .side-bar {
-  background-color: #202123;
+  /* background-color: ; */
   height:100vh;
   width: 244px;
   display: flex;

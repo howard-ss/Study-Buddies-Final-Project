@@ -7,22 +7,6 @@ const SupportChat = () => {
 	const [previousChats, setPreviousChats] = useState([]);
 	const [currentTitle, setCurrentTitle] = useState(null);
 
-	// Hardcoded test messages
-	// const testMessages = [
-	// 	{
-	// 		question: "What is your name?",
-	// 		answer: "My name is CodeYourFuture.",
-	// 	},
-	// 	{
-	// 		question: "What can you do?",
-	// 		answer: "I can have conversations and try to be helpful!",
-	// 	},
-	// 	{
-	// 		question: "How are you feeling today?",
-	// 		answer:
-	// 			"I'm an AI so I don't have real feelings, but my training is going well!",
-	// 	},
-	// ];
 
 	const createNewChat = () => {
 		setMessage(null);

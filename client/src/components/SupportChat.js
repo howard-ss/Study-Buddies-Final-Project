@@ -74,11 +74,11 @@ const getMessages = async () => {
          {uniqueTitles?.map((uniqueTitle,index)=> <li key={index} onClick={()=>handleClick(uniqueTitle)}>{uniqueTitle}</li>)}
         </ul>
         <nav>
-          <p>Made by Howard</p>
+          <p>Ask Anything --- </p>
         </nav>
       </section>
       <section className="main">
-       {!currentTitle && <h1>HowardGPT</h1>}
+       {!currentTitle && <h1>Talk With Me</h1>}
         <ul className="feed">
           {currentChat.map((chatMessage,index) => <li key={index}>
             <p className='role'>{chatMessage.role}</p>
@@ -91,8 +91,8 @@ const getMessages = async () => {
             <div id="submit" onClick={getMessages}>➢</div>
           </div>
           <p className="info">
-            The goal is to make AI systems more natural and safe to interact with.
-            Your feedback will help improve.
+            Please enter your question in above prompt.
+            
           </p>
         </div>
       </section>

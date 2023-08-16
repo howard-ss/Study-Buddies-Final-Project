@@ -5,7 +5,7 @@ import "./Home.css";
 import logoImage from "../public/cyf-image.jpg";
 
 import SupportChat from "./SupportChat";
-import WeatherApp from "./WeatherApp"
+
 
 export function Home() {
 	const [message, setMessage] = useState("Loading...");
@@ -32,8 +32,7 @@ export function Home() {
 			  <div className="header">
         	   <h1 className="heading">Study Buddies</h1>
                <Link to="/login">Login</Link>&nbsp;
-			   <Link to="/WeatherApp">Weather</Link>&nbsp;
-			   <Link to="/support-chat">Help</Link>
+			   <Link to="/support-chat">Talk With Me</Link>
          	 </div>
         	<div className="content">
          	 <div className="left">

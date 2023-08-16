@@ -4,8 +4,6 @@ import "./Header.css";
 
 // New import
 import { useState } from "react";
-import SupportChat from "../pages/SupportChat";
-import WeatherApp from "../pages/WeatherApp";
 
 const Header = () => {
   
@@ -24,32 +22,7 @@ const Header = () => {
 				<li>
 					<Link to="/register">Register</Link>
 				</li>
-				{/* <li><Link to="/SupportChat">Talk With Me</Link></li> */}
-
-				<li>
-					<button onClick={() => setIsOpenGPT(!isOpenGPT)}>Talk With Me</button>
-				</li>
-
-				<li>
-					<button onClick={() => setWeatherApp(!WeatherApp)}>
-						Check Weather
-					</button>
-				</li>
 			</ul>
-
-			{isOpenGPT && (
-				<React.Fragment>
-					<SupportChat />
-				</React.Fragment>
-			)}
-
-			{WeatherApp && (
-				<React.Fragment>
-					<WeatherApp />
-				</React.Fragment>
-			)}
-
-			{/* create a weather button */}
 
 		</nav>
 	);
