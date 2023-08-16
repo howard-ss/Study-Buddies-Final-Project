@@ -31,7 +31,7 @@ const getMessages = async () => {
       }
 
       try {
-          const response = await fetch("https://starter-kit-66um.onrender.com/", options)
+          const response = await fetch("https://starter-kit-66um.onrender.com/api/completions", options)
           const data = await response.json()
           setMessage(data.choices[0].message)
       }catch(error){

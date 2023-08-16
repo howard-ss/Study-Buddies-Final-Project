@@ -33,7 +33,7 @@ const SupportChat = () => {
 
 		try {
 			const response = await fetch(
-				"http://localhost:3100/api/completions",
+				"https://starter-kit-66um.onrender.com/api/completions",
 				options
 			);
 			const data = await response.json();
